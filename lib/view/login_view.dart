@@ -17,11 +17,12 @@ class _LoginViewState extends State<LoginView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image(
-              image: AssetImage('assets/universitySeal.png'),
-              width: 400,
-              height: 250,
+            Image.asset('assets/universitySeal.png',
+              width: 200,
               fit: BoxFit.fitWidth,
+            ),
+            SizedBox(
+              height: 40.0,
             ),
             Text('KHU\nMarket',
                 style: GoogleFonts.archivoBlack(
@@ -30,7 +31,7 @@ class _LoginViewState extends State<LoginView> {
                 ),
                 textAlign: TextAlign.center),
             SizedBox(
-              height: 60.0,
+              height: 80.0,
             ),
             ElevatedButton(
               onPressed: () {
