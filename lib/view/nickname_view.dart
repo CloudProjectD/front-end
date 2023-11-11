@@ -9,89 +9,123 @@ class NicknameView extends StatefulWidget {
 }
 
 class _NicknameViewState extends State<NicknameView> {
+  TextEditingController nicknameController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 20.0),
-            child: Column(
-                // mainAxisAlignment: MainAxisAlignment.center,
-                // SingleChileScrollView 위젯 내에서는 적용 안 되는 듯하다
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 150.0,
-                  ),
-                  Text(
-                    '닉네임',
-                    style: TextStyle(
-                      color: Colors.black87,
-                      fontSize: 40.0,
-                      fontWeight: FontWeight.w500,
+        body: GestureDetector(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 20.0),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 150.0,
                     ),
-                  ),
-                  Text('한글, 영문, 숫자 가능합니다',
+                    Text(
+                      '반가워요!',
                       style: TextStyle(
-                        color: Colors.black54,
-                        fontSize: 15.0,
-                      )),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    children: [
-                      Flexible(
-                        child: TextField(
-                          onChanged: (value) {
-                            // signUpController.setAdmissionYear(value);
-                          },
-                          onSubmitted: (value) {
-                            // signUpController.setAdmissionYear(value);
-                          },
-                          keyboardType: TextInputType.emailAddress,
-                          cursorColor: Colors.black87,
-                          decoration: InputDecoration(
-                            label: Text('닉네임을 입력해주세요'),
-                            contentPadding: EdgeInsets.fromLTRB(20, 20, 20, 20),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: BorderSide.none,
+                        color: Colors.black87,
+                        fontSize: 40.0,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Text('닉네임을 설정해주세요',
+                        style: TextStyle(
+                          color: Colors.black54,
+                          fontSize: 15.0,
+                        )),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      children: [
+                        Flexible(
+                          child: TextField(
+                            controller: nicknameController,
+                            keyboardType: TextInputType.emailAddress,
+                            cursorColor: Colors.black87,
+                            decoration: InputDecoration(
+                              label: Text('닉네임'),
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.never,
+                              contentPadding:
+                                  EdgeInsets.fromLTRB(20, 20, 20, 20),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide.none,
+                              ),
+                              filled: true,
                             ),
-                            filled: true,
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        width: 20.0,
-                      ),
-                      Container(
-                        height: 50.0,
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          child: Text('중복확인', style: TextStyle(fontSize: 20.0)),
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.grey),
+                        SizedBox(
+                          width: 20.0,
+                        ),
+                        SizedBox(
+                          height: 50.0,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              showDialog<String>(
+                                context: context,
+                                builder: (BuildContext context) => Dialog(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        const Text(
+                                          '중복된 닉네임입니다',
+                                          style: TextStyle(
+                                              fontSize: 20.0,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        const SizedBox(height: 15),
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text('확인', style: TextStyle(fontSize: 15.0),),
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor:
+                                                Color.fromRGBO(157, 28, 32, 1),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                            child:
+                                Text('중복확인', style: TextStyle(fontSize: 20.0)),
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.grey),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 250.0,
+                    ),
+                    SizedBox(
+                      height: 50.0,
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        child: Text('완료', style: TextStyle(fontSize: 20.0)),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color.fromRGBO(157, 28, 32, 1),
                         ),
                       ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 250.0,
-                  ),
-                  Container(
-                    height: 50.0,
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Text('완료', style: TextStyle(fontSize: 20.0)),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.grey,
-                      ),
-                    ),
-                  )
-                ]),
+                    )
+                  ]),
+            ),
           ),
         ));
   }
