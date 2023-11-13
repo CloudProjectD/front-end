@@ -122,7 +122,10 @@ class _AuthenticationViewState extends State<AuthenticationView> {
                       height: 50.0,
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: (){},
+                        onPressed: (){
+                          print('다음');
+                          Navigator.pushNamed(context, '/nickname');
+                        },
                         child: Text('다음', style: TextStyle(fontSize: 20.0)),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color.fromRGBO(157, 28, 32, 1),

@@ -16,6 +16,9 @@ class _NicknameViewState extends State<NicknameView> {
     return Scaffold(
         backgroundColor: Colors.white,
         body: GestureDetector(
+          onTap: (){
+            FocusScope.of(context).unfocus();
+          },
           child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 20.0),
@@ -117,7 +120,10 @@ class _NicknameViewState extends State<NicknameView> {
                       height: 50.0,
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          print('완료');
+                          Navigator.pushNamed(context, '/profile');
+                        },
                         child: Text('완료', style: TextStyle(fontSize: 20.0)),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color.fromRGBO(157, 28, 32, 1),

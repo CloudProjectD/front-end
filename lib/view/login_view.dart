@@ -36,6 +36,7 @@ class _LoginViewState extends State<LoginView> {
             ElevatedButton(
               onPressed: () {
                 print('Google Login Button');
+                Navigator.pushNamed(context, '/authentication');
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kyunghee_market/view/login_view.dart';
+import 'package:kyunghee_market/view/authentication_view.dart';
+import 'package:kyunghee_market/view/nickname_view.dart';
+import 'package:kyunghee_market/view/profile_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +22,13 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'KHU Market',
-      home: LoginView(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => LoginView(),
+        '/authentication': (context) => AuthenticationView(),
+        '/nickname': (context) => NicknameView(),
+        '/profile': (context) => ProfileView(),
+      },
     );
   }
 }
