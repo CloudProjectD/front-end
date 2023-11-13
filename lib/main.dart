@@ -63,14 +63,21 @@ class MyApp extends StatelessWidget {
             ],
           ),
         ),
-        body: Column(
-          children: [
-            Boxwidget(),
-            Boxwidget(),
-            Boxwidget(),
-          ],
-        ),
-
+        body: ListView.builder(
+          itemCount: 5, // 게시글 수
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: Text('게시글 제목 $index'),
+              subtitle: Text('가격: \$${10 + index}'),
+              onTap: () {
+              // 게시글을 클릭했을 때 상세 페이지로 이동
+              Navigator.push(
+              context,
+              MaterialPageRoute(
+              builder: (context) => PostDetailPage(postIndex: index),
+            ),
+          );
+        },
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           items: const <BottomNavigationBarItem>[
@@ -148,4 +155,31 @@ class Boxwidget extends StatelessWidget {
     );
   }
 }
+
+class DetailPage extends StatelessWidget {
+  final int postIndex;
+
+  const DetailPage({Key? key, required this.postIndex}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('게시글 상세 정보'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image(image: AssetImage('./assets/iphone.png')),
+            Text('게시글 제목: 게시글 제목 $postIndex'),
+            Text('가격: \$${10 + postIndex}'),
+            // 여기에 추가적인 상세 정보 표시 가능
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 
