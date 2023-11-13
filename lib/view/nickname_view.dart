@@ -122,7 +122,7 @@ class _NicknameViewState extends State<NicknameView> {
                       child: ElevatedButton(
                         onPressed: () {
                           print('완료');
-                          Navigator.pushNamed(context, '/profile');
+                          Navigator.pushNamed(context, '/main');
                         },
                         child: Text('완료', style: TextStyle(fontSize: 20.0)),
                         style: ElevatedButton.styleFrom(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kyunghee_market/view/login_view.dart';
 import 'package:kyunghee_market/view/authentication_view.dart';
+import 'package:kyunghee_market/view/main_view.dart';
 import 'package:kyunghee_market/view/nickname_view.dart';
 import 'package:kyunghee_market/view/profile_view.dart';
 
@@ -26,6 +27,7 @@ class _MyAppState extends State<MyApp> {
         '/authentication': (context) => AuthenticationView(),
         '/nickname': (context) => NicknameView(),
         '/profile': (context) => ProfileView(),
+        '/main': (context) => MainView(),
       },
     );
   }
