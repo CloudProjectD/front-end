@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kyunghee_market/view/profile_view.dart';
 import 'package:kyunghee_market/view/writing_view.dart';
 import 'detail_view.dart';
 class MainView extends StatefulWidget {
@@ -100,17 +101,62 @@ class _MainViewState extends State<MainView> {
         ),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
-          items: const <BottomNavigationBarItem>[
+          items:  <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
+              icon: InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MainView(),
+                    ),
+                  );
+                },
+                child: Column(
+                  children: [
+                    Icon(Icons.home),
+                    SizedBox(height: 5),
+                  ],
+                ),
+              ),
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.mail),
+              icon: InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MainView(),
+                    ),
+                  );
+                },
+                child: Column(
+                  children: [
+                    Icon(Icons.mail),
+                    SizedBox(height: 5),
+                  ],
+                ),
+              ),
               label: 'Messages',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person),
+              icon: InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProfileView(),
+                    ),
+                  );
+                },
+                child: Column(
+                  children: [
+                    Icon(Icons.person),
+                    SizedBox(height: 5),
+                  ],
+                ),
+              ),
               label: 'Profile',
             ),
           ],
