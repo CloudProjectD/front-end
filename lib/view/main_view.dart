@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kyunghee_market/view/writing_view.dart';
 import 'detail_view.dart';
 class MainView extends StatefulWidget {
   const MainView({super.key});
@@ -25,7 +26,11 @@ class _MainViewState extends State<MainView> {
 
             }, icon: Icon(Icons.search)),
             IconButton(onPressed: (){
-
+              Navigator.push(context,
+                  MaterialPageRoute(
+                  builder: (context) => WritingView(),
+                ),
+              );
             }, icon: Icon(Icons.add)),
           ],
           backgroundColor: Colors.white,
