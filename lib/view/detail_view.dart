@@ -21,11 +21,10 @@ class _DetailViewState extends State<DetailView> {
               alignment: Alignment.topLeft,
               children: [
                 Container(
-                  height: 380, // 물품 사진의 높이,
+                  height: 380,
                   width: 500,
-                  color: Colors.grey, // 임시로 회색 배경 사용
-                  // 물품 사진 표시
-                  child: Image.asset("./assets/iphone_detail.png",fit: BoxFit.cover), // 물품 사진 URL
+                  color: Colors.grey,
+                  child: Image.asset("./assets/iphone_detail.png",fit: BoxFit.cover),
                   ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -41,11 +40,10 @@ class _DetailViewState extends State<DetailView> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              // 판매자 정보 표시
               child: Row(
                 children: [
                   CircleAvatar(
-                    radius: 20, // 프로필 사진 반지름
+                    radius: 20,
                     backgroundImage: NetworkImage(
                         'https://i.namu.wiki/i/phJJ4yav60AY8ao5brb4JDnoqP0ZFJk3zaqLnE9l760V5ubk2b67VUnQzz73oeVaJRm49I_Fr32QqU36RyddNw.webp'),
                   ),
@@ -57,19 +55,18 @@ class _DetailViewState extends State<DetailView> {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 17,
-                      ),), // 판매자 닉네임 표시
+                      ),),
                     ],
                   ),
                   Spacer(),
                   InkWell(
                     onTap: () {
-                      // 이미지 버튼이 눌렸을 때 수행할 동작 추가
                     },
                     child: Image.asset(
                       './assets/siren.png',
                       width: 24,
                       height: 24,
-                      color: Colors.black, // 이미지 색상 설정 (선택 사항)
+                      color: Colors.black,
                     ),
                   ),
                 ],
@@ -77,7 +74,6 @@ class _DetailViewState extends State<DetailView> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              // 게시글 제목과 내용 표시
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -115,7 +111,6 @@ class _DetailViewState extends State<DetailView> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            // 쪽지 버튼 추가
             Spacer(),
             Container(
               width: 118,
@@ -130,7 +125,7 @@ class _DetailViewState extends State<DetailView> {
                   IconButton(
                     icon: Icon(Icons.send, color: Colors.white,),
                     onPressed: () {
-                      // 쪽지 버튼이 눌렸을 때 수행할 동작 추가
+
                     },
                   ),
                   SizedBox(width: 10),

@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class WritingView extends StatefulWidget {
   const WritingView({super.key});
@@ -10,6 +13,8 @@ class WritingView extends StatefulWidget {
 class _WritingViewState extends State<WritingView> {
   String transactionType = '거래';
 
+  XFile? _image;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,34 +24,43 @@ class _WritingViewState extends State<WritingView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Row(
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.arrow_back),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ],
+              Container(
+                alignment: Alignment.topLeft,
+                child: IconButton(
+                  padding: EdgeInsets.zero,
+                  icon: Icon(Icons.arrow_back),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
               ),
+              SizedBox(height: 5),
               // 이미지 추가 박스
               GestureDetector(
-                onTap: () {
-                  // 이미지 추가 기능 구현
-                },
+                onTap: _getImage,
                 child: Container(
-                  margin: EdgeInsets.only(top: 10), // 여백을 직접 지정
+                  // margin: EdgeInsets.only(top: 10),
+                  alignment: Alignment.topLeft,
+                  padding: EdgeInsets.only(top:10),
                   child: Container(
-                    height: 100,
-                    width: 20,
-                    color: Colors.grey,
-                    child: Center(
-                      child: Icon(
-                        Icons.camera_alt,
-                        size: 20,
-                        color: Colors.white,
+                    height: 60,
+                    width: 60,
+                    child: _image == null
+                        ? Icon(
+                          Icons.camera_alt,
+                          size: 20,
+                          color: Colors.white,
+                        )
+                        : Image.file(
+                            File(_image!.path!),
+                            height: 80,
+                            width: 80,
+                            fit: BoxFit.cover,
+                          ),
+                      decoration: BoxDecoration(
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.circular(15.0),
                       ),
-                    ),
                   ),
                 ),
               ),
@@ -61,7 +75,6 @@ class _WritingViewState extends State<WritingView> {
                 ),
               ),
               SizedBox(height: 16),
-              // 게시글 내용 입력
               Text('설명'),
               TextField(
                 maxLines: 5,
@@ -73,7 +86,6 @@ class _WritingViewState extends State<WritingView> {
                 ),
               ),
               SizedBox(height: 16),
-              // 거래방식 선택 버튼
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -144,7 +156,6 @@ class _WritingViewState extends State<WritingView> {
                 ],
               ),
               SizedBox(height: 16),
-              // 거래 가격 입력
               TextField(
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
@@ -155,16 +166,16 @@ class _WritingViewState extends State<WritingView> {
                 ),
               ),
               SizedBox(height: 50),
-              // 게시글 작성 완료 버튼
+
               ElevatedButton(
                 onPressed: () {
-                  // 게시글 작성 완료 시 수행할 동작 추가
+
                 },
                 child: Text('완료', style: TextStyle(color: Colors.white),),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color.fromRGBO(157, 28, 32, 1),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0), // 원하는 둥근 정도를 설정
+                    borderRadius: BorderRadius.circular(15.0),
                   ),
                 )
               ),
@@ -173,5 +184,15 @@ class _WritingViewState extends State<WritingView> {
         ),
       ),
     );
+  }
+  Future<void> _getImage() async {
+    final picker = ImagePicker();
+    final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedImage != null) {
+      setState(() {
+        _image = XFile(pickedImage.path); // XFile을 File로 변환
+      });
+    }
   }
 }
