@@ -36,6 +36,9 @@ class _MessagesViewState extends State<MessagesView> {
                 borderRadius: BorderRadius.circular(20.0)
             ),
             child: ListTile(
+              onTap: (){
+                Navigator.pushNamed(context, '/messageroom');
+              },
               contentPadding: EdgeInsets.all(20.0),
               title: Row(
                 children: [
