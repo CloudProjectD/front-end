@@ -39,13 +39,12 @@ class _MessagesViewState extends State<MessagesView> {
               onTap: (){
                 Navigator.pushNamed(context, '/messageroom');
               },
-              contentPadding: EdgeInsets.all(20.0),
+              contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
               title: Row(
                 children: [
-                  Image.asset("assets/profile1.png",
-                    height: 35.0,
-                    width: 35.0,
-                    fit: BoxFit.cover,
+                  CircleAvatar(
+                    backgroundImage: AssetImage('assets/profile1.png'),
+                    radius: 17,
                   ),
                   SizedBox(width: 10.0,),
                   Column(
