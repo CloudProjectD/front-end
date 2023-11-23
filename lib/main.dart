@@ -23,7 +23,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'KHU Market',
-      initialRoute: '/messageroom',
+      initialRoute: '/',
       routes: {
         '/': (context) => LoginView(),
         '/authentication': (context) => AuthenticationView(),

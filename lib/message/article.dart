@@ -6,36 +6,41 @@ class Article extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
+      height: 80,
+      margin: EdgeInsets.fromLTRB(15.0, 5.0, 15.0, 0.0),
       padding: EdgeInsets.symmetric(horizontal: 20.0),
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius:
-          BorderRadius.vertical(bottom: Radius.circular(10.0)),
+              BorderRadius.circular(10.0),
           boxShadow: [
             BoxShadow(
               color: Colors.grey,
-              spreadRadius: 2,
-              blurRadius: 5,
+              spreadRadius: 0.5,
+              blurRadius: 3,
             )
           ]),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '스타벅스 기프티콘',
-                style:
-                TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              Text('스타벅스 기프티콘 팔아여')
-            ],
+          SizedBox(
+            width: 240.0,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '스타벅스 기프티콘',
+                  maxLines: 1,
+                  style:
+                  TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Text('스타벅스 기프티콘 팔아여', maxLines: 1,)
+              ],
+            ),
           ),
           Image.asset('assets/product1.png')
         ],
