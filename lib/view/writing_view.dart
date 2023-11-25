@@ -13,13 +13,13 @@ class WritingView extends StatefulWidget {
 class _WritingViewState extends State<WritingView> {
   String transactionType = '거래';
 
-  XFile? _image;
+  List<XFile?> _images = List.generate(10, (index) => null);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child : Padding(
+        child: Padding(
           padding: const EdgeInsets.all(25.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -35,32 +35,34 @@ class _WritingViewState extends State<WritingView> {
                 ),
               ),
               SizedBox(height: 5),
-              // 이미지 추가 박스
-              GestureDetector(
-                onTap: _getImage,
-                child: Container(
-                  // margin: EdgeInsets.only(top: 10),
-                  alignment: Alignment.topLeft,
-                  padding: EdgeInsets.only(top:10),
-                  child: Container(
-                    height: 60,
-                    width: 60,
-                    child: _image == null
-                        ? Icon(
-                          Icons.camera_alt,
-                          size: 20,
-                          color: Colors.white,
-                        )
-                        : Image.file(
-                            File(_image!.path!),
-                            height: 80,
-                            width: 80,
-                            fit: BoxFit.cover,
-                          ),
-                      decoration: BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.circular(15.0),
+              Row(
+                children: List.generate(
+                  _images.length,
+                  (index) => Expanded(
+                    child: GestureDetector(
+                      onTap: () => _getImage(index),
+                      child: Container(
+                        height: 60,
+                        width: 60,
+                        margin: EdgeInsets.only(right: 8),
+                        child: _images[index] == null
+                            ? Icon(
+                                Icons.camera_alt,
+                                size: 20,
+                                color: Colors.white,
+                              )
+                            : Image.file(
+                                File(_images[index]!.path),
+                                height: 80,
+                                width: 80,
+                                fit: BoxFit.cover,
+                              ),
+                        decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
                       ),
+                    ),
                   ),
                 ),
               ),
@@ -166,32 +168,32 @@ class _WritingViewState extends State<WritingView> {
                 ),
               ),
               SizedBox(height: 50),
-
               ElevatedButton(
-                onPressed: () {
-
-                },
-                child: Text('완료', style: TextStyle(color: Colors.white),),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromRGBO(157, 28, 32, 1),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
+                  onPressed: () {},
+                  child: Text(
+                    '완료',
+                    style: TextStyle(color: Colors.white),
                   ),
-                )
-              ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromRGBO(157, 28, 32, 1),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                  )),
             ],
           ),
         ),
       ),
     );
   }
-  Future<void> _getImage() async {
+
+  Future<void> _getImage(int index) async {
     final picker = ImagePicker();
     final pickedImage = await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedImage != null) {
       setState(() {
-        _image = XFile(pickedImage.path); // XFile을 File로 변환
+        _images[index] = XFile(pickedImage.path); // XFile을 File로 변환
       });
     }
   }

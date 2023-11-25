@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:kyunghee_market/view/categorylist_view.dart';
+import 'package:kyunghee_market/view/messages_view.dart';
 import 'package:kyunghee_market/view/profile_view.dart';
 import 'package:kyunghee_market/view/writing_view.dart';
 import 'detail_view.dart';
@@ -37,48 +39,7 @@ class _MainViewState extends State<MainView> {
           backgroundColor: Colors.white,
           iconTheme: IconThemeData(color: Colors.grey),
         ),
-        drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              DrawerHeader(
-                child: Image.asset(
-                    './assets/healthicons_market-stall-negative.png'),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                ),
-              ),
-              ListTile(
-                leading: Icon(Icons.handshake),
-                title: Text('거래'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.money),
-                title: Text('경매'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.groups),
-                title: Text('나눔'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.house),
-                title: Text('원룸'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          ),
-        ),
+        drawer: AppDrawer(),
         body: ListView.builder(
           itemCount: 10, // 게시글 수
           itemBuilder: (context, index) {
@@ -127,7 +88,7 @@ class _MainViewState extends State<MainView> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => MainView(),
+                      builder: (context) => MessagesView(),
                     ),
                   );
                 },
@@ -161,6 +122,80 @@ class _MainViewState extends State<MainView> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class AppDrawer extends StatelessWidget {
+  const AppDrawer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          DrawerHeader(
+            child: Image.asset(
+                './assets/healthicons_market-stall-negative.png'),
+            decoration: BoxDecoration(
+              color: Colors.white,
+            ),
+          ),
+          ListTile(
+            leading: Icon(Icons.handshake),
+            title: Text('거래'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => CategoryListView(category: '거래'),
+                )
+              );
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.money),
+            title: Text('경매'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CategoryListView(category: '경매'),
+                  )
+              );
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.groups),
+            title: Text('나눔'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CategoryListView(category: '나눔'),
+                  )
+              );
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.house),
+            title: Text('원룸'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CategoryListView(category: '원룸'),
+                  )
+              );
+            },
+          ),
+        ],
       ),
     );
   }

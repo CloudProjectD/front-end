@@ -10,6 +10,13 @@ class DetailView extends StatefulWidget {
 }
 
 class _DetailViewState extends State<DetailView> {
+  bool isLiked = false;
+  //나중에 좋아요 눌렀었는지 체크하는 로직 추가 필요
+  List<String> images = [
+    "./assets/iphone.png",
+    "./assets/iphone_detail.png",
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,8 +31,16 @@ class _DetailViewState extends State<DetailView> {
                   height: 380,
                   width: 500,
                   color: Colors.grey,
-                  child: Image.asset("./assets/iphone_detail.png",fit: BoxFit.cover),
+                  child: PageView.builder(
+                    itemCount: images.length,
+                    itemBuilder: (context, index) {
+                      return Image.asset(
+                        images[index],
+                        fit: BoxFit.cover,
+                      );
+                    },
                   ),
+                ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: IconButton(
@@ -101,8 +116,13 @@ class _DetailViewState extends State<DetailView> {
           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             IconButton(onPressed: (){
-
-            }, icon: Icon(Icons.favorite_border)),
+              setState(() {
+                isLiked=!isLiked;
+              });
+            }, icon: Icon(
+                isLiked ? Icons.favorite : Icons.favorite_border,
+                color: isLiked ? Colors.red : Colors.black,
+            )),
             SizedBox(width: 50),
             Text(
               '1,555,000원',
