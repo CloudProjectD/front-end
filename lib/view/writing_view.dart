@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -158,15 +157,72 @@ class _WritingViewState extends State<WritingView> {
                 ],
               ),
               SizedBox(height: 16),
-              TextField(
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  labelText: '거래 가격',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
+              if(transactionType == '거래')
+                TextField(
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    labelText: '거래 가격',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
                   ),
-                ),
-              ),
+                )
+              else if(transactionType == '경매')
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 16),
+                    Text('경매 마감일'),
+                    TextField(
+                      keyboardType: TextInputType.datetime,
+                      decoration: InputDecoration(
+                        labelText: '경매 마감일',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 16),
+                    Text('경매 시작가'),
+                    TextField(
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: '경매 시작가',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              else if(transactionType=='원룸')
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 16),
+                      Text('보증금'),
+                      TextField(
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          labelText: '보증금',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 16),
+                      Text('월세'),
+                      TextField(
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          labelText: '월세',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
               SizedBox(height: 50),
               ElevatedButton(
                   onPressed: () {},
