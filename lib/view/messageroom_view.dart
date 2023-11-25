@@ -37,11 +37,12 @@ class _MessageRoomViewState extends State<MessageRoomView> {
           actions: [
             IconButton(
               icon: Icon(
-                Icons.more_vert,
+                Icons.notifications_rounded,
                 color: Colors.black,
               ),
               onPressed: () {
-                print('More button is clicked');
+                print('Report button is clicked');
+                Navigator.pushNamed(context, '/report');
               },
             ),
           ],
