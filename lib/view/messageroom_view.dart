@@ -20,19 +20,37 @@ class _MessageRoomViewState extends State<MessageRoomView> {
           toolbarHeight: 60.0,
           elevation: 0.0,
           backgroundColor: Colors.white,
-          leading: Container(
-            margin: EdgeInsets.all(10.0),
-            child: CircleAvatar(
-              backgroundImage: AssetImage('assets/profile1.png'),
-            ),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            color: Colors.black,
           ),
-          title: Text(
-            '알로하오예',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-            ),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                margin: EdgeInsets.all(10.0),
+                child: CircleAvatar(
+                  backgroundImage: AssetImage('assets/profile1.png'),
+                ),
+              ),
+              Text(
+                '알로하오예',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.all(10.0),
+                child: CircleAvatar(
+                  backgroundColor: Colors.white,
+                ),
+              ),
+            ],
           ),
           actions: [
             IconButton(
