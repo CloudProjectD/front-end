@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -9,6 +10,18 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
+
+  void signInWithGoogle() async {
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    if (googleUser != null) {
+      print('name = ${googleUser.displayName}');
+      print('email = ${googleUser.email}');
+      print('id = ${googleUser.id}');
+      Navigator.pushNamed(context, '/nickname');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,10 +47,7 @@ class _LoginViewState extends State<LoginView> {
               height: 80.0,
             ),
             ElevatedButton(
-              onPressed: () {
-                print('Google Login Button');
-                Navigator.pushNamed(context, '/authentication');
-              },
+              onPressed: signInWithGoogle,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
