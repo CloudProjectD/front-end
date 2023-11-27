@@ -3,6 +3,7 @@ import "package:kyunghee_market/view/messages_view.dart";
 import "package:kyunghee_market/view/profile_view.dart";
 import "package:kyunghee_market/view/writing_view.dart";
 
+import "../model/post.dart";
 import "detail_view.dart";
 import "main_view.dart";
 
@@ -20,7 +21,21 @@ class CategoryListView extends StatefulWidget { //변경될 수 있는 state를 
 }
 
 class _CategoryListViewState extends State<CategoryListView> {
-  //ui에서 변화할 부분
+  //더미데이터
+  List<Post> posts = [
+    Post(title: "아이폰 팝니다^^", content: "싸게팔아요", price: 1555000, category: '거래', image: ["./assets/iphone.png"], creator: "컴공미남"),
+    Post(title: "아이폰 팝니다^^", content: "싸게나눔", category: '니늠', image: ["./assets/iphone.png"], creator: "컴공미남"),
+    Post(title: "아이폰 팝니다^^", content: "경매", price: 1555000, category: '경매', image: ["./assets/iphone.png"], creator: "컴공미남"),
+    Post(title: "아이폰집 팝니다^^", content: "싸게팔아요", price: 1555000, deposit: 10000000, category: '원룸', image: ["./assets/iphone.png"], creator: "컴공미남"),
+    Post(title: "아이폰 팝니다^^", content: "싸게팔아요", price: 1555000, category: '거래', image: ["./assets/iphone.png"], creator: "컴공미남"),
+    Post(title: "아이폰 팝니다^^", content: "싸게팔아요", price: 1555000, category: '거래', image: ["./assets/iphone.png"], creator: "컴공미남"),
+    Post(title: "아이폰 팝니다^^", content: "싸게팔아요", price: 1555000, category: '거래', image: ["./assets/iphone.png"], creator: "컴공미남"),
+    Post(title: "아이폰 팝니다^^", content: "싸게팔아요", price: 1555000, category: '거래', image: ["./assets/iphone.png"], creator: "컴공미남"),
+    Post(title: "아이폰 팝니다^^", content: "싸게팔아요", price: 1555000, category: '거래', image: ["./assets/iphone.png"], creator: "컴공미남"),
+    Post(title: "아이폰 팝니다^^", content: "싸게팔아요", price: 1555000, category: '거래', image: ["./assets/iphone.png"], creator: "컴공미남"),
+    Post(title: "아이폰 팝니다^^", content: "싸게팔아요", price: 1555000, category: '거래', image: ["./assets/iphone.png"], creator: "컴공미남"),
+
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -215,7 +230,7 @@ class _PostListState extends State<PostList> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: 10, // 게시글 수
+      // itemCount: 10, // 게시글 수
       itemBuilder: (context, index) {
         return Card(
           margin: const EdgeInsets.all(8.0),
@@ -223,13 +238,14 @@ class _PostListState extends State<PostList> {
             leading: Image.asset("./assets/iphone.png"), // 물품 사진
             title: Text('아아폰 팝니다^^'), // 게시글 제목 - 이건 동일
             subtitle: Text('1,555,000원'), // 가격, 
-            onTap: () {
+            /*onTap: () {
+
               Navigator.push(context,
                 MaterialPageRoute(
                   builder: (context) => DetailView(postIndex: index),
                 ),
               );
-            },
+            },*/
           ),
         );
       },
@@ -256,13 +272,14 @@ class _TradeListState extends State<TradeList> {
             leading: Image.asset("./assets/iphone.png"), // 물품 사진
             title: Text('아아폰 팝니다^^'), // 게시글 제목 - 이건 동일
             subtitle: Text('1,555,000원'), // 가격,
-            onTap: () {
+            /*onTap: () {
+
               Navigator.push(context,
                 MaterialPageRoute(
                   builder: (context) => DetailView(postIndex: index),
                 ),
               );
-            },
+            },*/
           ),
         );
       },
@@ -289,13 +306,14 @@ class _AuctionListState extends State<AuctionList> {
             leading: Image.asset("./assets/iphone.png"), // 물품 사진
             title: Text('아아폰 경매요^^'), // 게시글 제목 - 이건 동일
             subtitle: Text('1,555,000원부터'), // 가격,
-            onTap: () {
+            /*onTap: () {
+
               Navigator.push(context,
                 MaterialPageRoute(
                   builder: (context) => DetailView(postIndex: index),
                 ),
               );
-            },
+            },*/
           ),
         );
       },
@@ -323,13 +341,14 @@ class _ShareListState extends State<ShareList> {
             leading: Image.asset("./assets/iphone.png"), // 물품 사진
             title: Text('부자됐슴.아이폰 나눔합니다'), // 게시글 제목 - 이건 동일
             subtitle: Text('무료'), // 가격,
-            onTap: () {
+            /*onTap: () {
+
               Navigator.push(context,
                 MaterialPageRoute(
                   builder: (context) => DetailView(postIndex: index),
                 ),
               );
-            },
+            },*/
           ),
         );
       },
@@ -357,13 +376,14 @@ class _OneRoomListState extends State<OneRoomList> {
             leading: Image.asset("./assets/iphone.png"), // 물품 사진
             title: Text('서천동 원룸 양도합니다'), // 게시글 제목 - 이건 동일
             subtitle: Text('400/50'), // 가격,
-            onTap: () {
+            /*onTap: () {
+
               Navigator.push(context,
                 MaterialPageRoute(
                   builder: (context) => DetailView(postIndex: index),
                 ),
               );
-            },
+            },*/
           ),
         );
       },

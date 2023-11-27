@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kyunghee_market/view/messageroom_view.dart';
+
+import '../model/post.dart';
 
 class DetailView extends StatefulWidget {
-  final int postIndex;
-  const DetailView({Key? key, required this.postIndex}) : super(key: key);
+  final Post post;
+  DetailView({Key? key, required this.post}) : super(key: key);
 
   @override
   State<DetailView> createState() => _DetailViewState();
@@ -145,6 +148,11 @@ class _DetailViewState extends State<DetailView> {
                   IconButton(
                     icon: Icon(Icons.send, color: Colors.white,),
                     onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => MessageRoomView()
+                          )
+                      );
 
                     },
                   ),

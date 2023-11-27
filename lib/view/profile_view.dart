@@ -13,6 +13,7 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -205,68 +206,6 @@ class _ProfileViewState extends State<ProfileView> {
             )
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        items:  <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MainView(),
-                  ),
-                );
-              },
-              child: Column(
-                children: [
-                  Icon(Icons.home),
-                  SizedBox(height: 5),
-                ],
-              ),
-            ),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MessagesView(),
-                  ),
-                );
-              },
-              child: Column(
-                children: [
-                  Icon(Icons.mail),
-                  SizedBox(height: 5),
-                ],
-              ),
-            ),
-            label: 'Messages',
-          ),
-          BottomNavigationBarItem(
-            icon: InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ProfileView(),
-                  ),
-                );
-              },
-              child: Column(
-                children: [
-                  Icon(Icons.person),
-                  SizedBox(height: 5),
-                ],
-              ),
-            ),
-            label: 'Profile',
-          ),
-        ],
       ),
     );
   }
