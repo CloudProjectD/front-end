@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:kyunghee_market/view/categorylist_view.dart';
+import 'package:kyunghee_market/view/messages_view.dart';
 import 'package:kyunghee_market/view/profile_view.dart';
 import 'package:kyunghee_market/view/writing_view.dart';
+import '../model/post.dart';
 import 'detail_view.dart';
 class MainView extends StatefulWidget {
   const MainView({super.key});
@@ -10,6 +13,21 @@ class MainView extends StatefulWidget {
 }
 class _MainViewState extends State<MainView> {
   // This widget is the root of your application.
+  List<Post> posts = [
+    Post(title: "아이폰 팝니다^^", content: "싸게팔아요", price: 1555000, category: '거래', image: ["./assets/iphone.png"], creator: "컴공미남"),
+    Post(title: "아이폰 팝니다^^", content: "싸게나눔", category: '니늠', image: ["./assets/iphone.png"], creator: "컴공미남"),
+    Post(title: "아이폰 팝니다^^", content: "경매", price: 1555000, category: '경매', image: ["./assets/iphone.png"], creator: "컴공미남"),
+    Post(title: "아이폰집 팝니다^^", content: "싸게팔아요", price: 1555000, deposit: 10000000, category: '원룸', image: ["./assets/iphone.png"], creator: "컴공미남"),
+    Post(title: "아이폰 팝니다^^", content: "싸게팔아요", price: 1555000, category: '거래', image: ["./assets/iphone.png"], creator: "컴공미남"),
+    Post(title: "아이폰 팝니다^^", content: "싸게팔아요", price: 1555000, category: '거래', image: ["./assets/iphone.png"], creator: "컴공미남"),
+    Post(title: "아이폰 팝니다^^", content: "싸게팔아요", price: 1555000, category: '거래', image: ["./assets/iphone.png"], creator: "컴공미남"),
+    Post(title: "아이폰 팝니다^^", content: "싸게팔아요", price: 1555000, category: '거래', image: ["./assets/iphone.png"], creator: "컴공미남"),
+    Post(title: "아이폰 팝니다^^", content: "싸게팔아요", price: 1555000, category: '거래', image: ["./assets/iphone.png"], creator: "컴공미남"),
+    Post(title: "아이폰 팝니다^^", content: "싸게팔아요", price: 1555000, category: '거래', image: ["./assets/iphone.png"], creator: "컴공미남"),
+    Post(title: "아이폰 팝니다^^", content: "싸게팔아요", price: 1555000, category: '거래', image: ["./assets/iphone.png"], creator: "컴공미남"),
+
+  ];
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -37,61 +55,20 @@ class _MainViewState extends State<MainView> {
           backgroundColor: Colors.white,
           iconTheme: IconThemeData(color: Colors.grey),
         ),
-        drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              DrawerHeader(
-                child: Image.asset(
-                    './assets/healthicons_market-stall-negative.png'),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                ),
-              ),
-              ListTile(
-                leading: Icon(Icons.handshake),
-                title: Text('거래'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.money),
-                title: Text('경매'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.groups),
-                title: Text('나눔'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.house),
-                title: Text('원룸'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          ),
-        ),
+        drawer: AppDrawer(),
         body: ListView.builder(
-          itemCount: 10, // 게시글 수
+          itemCount: posts.length, // 게시글 수
           itemBuilder: (context, index) {
             return Card(
               margin: const EdgeInsets.all(8.0),
               child: ListTile(
-                leading: Image.asset("./assets/iphone.png"), // 물품 사진
-                title: Text('아아폰 팝니다^^'), // 게시글 제목
-                subtitle: Text('1,555,000원'), // 가격
+                leading: Image.asset(posts[index].image.first), // 물품 사진
+                title: Text(posts[index].title), // 게시글 제목
+                subtitle: Text('${posts[index].price}원'), // 가격
                 onTap: () {
                   Navigator.push(context,
                       MaterialPageRoute(
-                          builder: (context) => DetailView(postIndex: index),
+                          builder: (context) => DetailView(post: posts[index]),
                       ),
                   );
                 },
@@ -99,68 +76,80 @@ class _MainViewState extends State<MainView> {
             );
           },
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          items:  <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MainView(),
-                    ),
-                  );
-                },
-                child: Column(
-                  children: [
-                    Icon(Icons.home),
-                    SizedBox(height: 5),
-                  ],
-                ),
-              ),
-              label: 'Home',
+      ),
+    );
+  }
+}
+
+class AppDrawer extends StatelessWidget {
+  const AppDrawer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          DrawerHeader(
+            child: Image.asset(
+                './assets/healthicons_market-stall-negative.png'),
+            decoration: BoxDecoration(
+              color: Colors.white,
             ),
-            BottomNavigationBarItem(
-              icon: InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MainView(),
-                    ),
-                  );
-                },
-                child: Column(
-                  children: [
-                    Icon(Icons.mail),
-                    SizedBox(height: 5),
-                  ],
-                ),
-              ),
-              label: 'Messages',
-            ),
-            BottomNavigationBarItem(
-              icon: InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ProfileView(),
-                    ),
-                  );
-                },
-                child: Column(
-                  children: [
-                    Icon(Icons.person),
-                    SizedBox(height: 5),
-                  ],
-                ),
-              ),
-              label: 'Profile',
-            ),
-          ],
-        ),
+          ),
+          ListTile(
+            leading: Icon(Icons.handshake),
+            title: Text('거래'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => CategoryListView(category: '거래'),
+                )
+              );
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.money),
+            title: Text('경매'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CategoryListView(category: '경매'),
+                  )
+              );
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.groups),
+            title: Text('나눔'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CategoryListView(category: '나눔'),
+                  )
+              );
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.house),
+            title: Text('원룸'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CategoryListView(category: '원룸'),
+                  )
+              );
+            },
+          ),
+        ],
       ),
     );
   }

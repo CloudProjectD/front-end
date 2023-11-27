@@ -8,6 +8,7 @@ class MessagesView extends StatefulWidget {
 }
 
 class _MessagesViewState extends State<MessagesView> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,53 +92,6 @@ class _MessagesViewState extends State<MessagesView> {
             ),
           );
         },
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        items:  <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, '/main');
-              },
-              child: Column(
-                children: [
-                  Icon(Icons.home),
-                  SizedBox(height: 5),
-                ],
-              ),
-            ),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, '/messages');
-              },
-              child: Column(
-                children: [
-                  Icon(Icons.mail),
-                  SizedBox(height: 5),
-                ],
-              ),
-            ),
-            label: 'Messages',
-          ),
-          BottomNavigationBarItem(
-            icon: InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, '/profile');
-              },
-              child: Column(
-                children: [
-                  Icon(Icons.person),
-                  SizedBox(height: 5),
-                ],
-              ),
-            ),
-            label: 'Profile',
-          ),
-        ],
       ),
     );
   }

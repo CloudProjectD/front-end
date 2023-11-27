@@ -144,6 +144,7 @@ class _NicknameViewState extends State<NicknameView> {
                             )
                           // Add more decoration..
                         ),
+
                         hint: const Text(
                           '학과',
                           style: TextStyle(fontSize: 14),
@@ -249,7 +250,7 @@ class _NicknameViewState extends State<NicknameView> {
                       alignment: Alignment.bottomCenter,
                       child: ElevatedButton(
                         onPressed:
-                          _isDisable? null : () => Navigator.pushNamed(context, '/main'),
+                          _isDisable? null : () => Navigator.pushNamed(context, '/app'),
                           child: Text('시작하기', style: TextStyle(fontSize: 20.0)),
                           style: ElevatedButton.styleFrom(
                             primary: Color.fromRGBO(157, 28, 32, 1),
