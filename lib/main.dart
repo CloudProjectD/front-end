@@ -7,6 +7,7 @@ import 'package:kyunghee_market/view/messageroom_view.dart';
 import 'package:kyunghee_market/view/messages_view.dart';
 import 'package:kyunghee_market/view/nickname_view.dart';
 import 'package:kyunghee_market/view/profile_view.dart';
+import 'package:kyunghee_market/view/report_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -34,6 +35,7 @@ class _MyAppState extends State<MyApp> {
         '/main': (context) => MainView(),
         '/messages': (context) => MessagesView(),
         '/messageroom': (context) => MessageRoomView(),
+        '/report': (context) => ReportView()
       },
     );
   }
