@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:kyunghee_market/controller/bottom_controller.dart';
 import 'package:kyunghee_market/view/categorylist_view.dart';
 import 'package:kyunghee_market/view/messages_view.dart';
 import 'package:kyunghee_market/view/profile_view.dart';

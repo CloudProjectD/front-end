@@ -15,10 +15,10 @@ class DetailView extends StatefulWidget {
 class _DetailViewState extends State<DetailView> {
   bool isLiked = false;
   //나중에 좋아요 눌렀었는지 체크하는 로직 추가 필요
-  List<String> images = [
-    "./assets/iphone.png",
-    "./assets/iphone_detail.png",
-  ];
+  // List<String> images = [
+  //   "./assets/iphone.png",
+  //   "./assets/iphone_detail.png",
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +35,10 @@ class _DetailViewState extends State<DetailView> {
                   width: 500,
                   color: Colors.grey,
                   child: PageView.builder(
-                    itemCount: images.length,
+                    itemCount: widget.post.image.length,
                     itemBuilder: (context, index) {
                       return Image.asset(
-                        images[index],
+                        widget.post.image[index],
                         fit: BoxFit.cover,
                       );
                     },
@@ -69,7 +69,7 @@ class _DetailViewState extends State<DetailView> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('컴공미남',
+                      Text(widget.post.creator,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 17,
@@ -96,7 +96,7 @@ class _DetailViewState extends State<DetailView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '아이폰 15 pro 블랙 256GB',
+                    widget.post.title,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -104,7 +104,7 @@ class _DetailViewState extends State<DetailView> {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    '아이폰 15 pro 블랙 256GB 판매합니다. \n 경희대학교 내에서 직거래 가능합니다',
+                    widget.post.content,
                     style: TextStyle(fontSize: 16),
                   ),
                 ],
@@ -127,13 +127,7 @@ class _DetailViewState extends State<DetailView> {
                 color: isLiked ? Colors.red : Colors.black,
             )),
             SizedBox(width: 50),
-            Text(
-              '1,555,000원',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            _buildPriceInfo(widget.post),
             Spacer(),
             Container(
               width: 118,
@@ -168,5 +162,24 @@ class _DetailViewState extends State<DetailView> {
         ),
       ),
     );
+  }
+  Widget _buildPriceInfo(Post post){
+    if (post.category == '원룸') {
+      return Text(' ${post.deposit}/${post.price}원', style: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.bold));
+    } else if (post.category == '나눔') {
+      return Text('나눔', style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold));
+    } else if(post.category == '경매'){
+      return Text('${post.price}원부터', style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold));
+    } else {
+      return Text('${post.price}원', style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold));
+    }
   }
 }
