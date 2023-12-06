@@ -12,8 +12,10 @@ import "main_view.dart";
 //중복되는 코드 너무 많음
 //navigation bar 같이 중복되는 위젯은 빼야할 것 같다
 
-class CategoryListView extends StatefulWidget { //변경될 수 있는 state를 가지고 있는 위젯
+class CategoryListView extends StatefulWidget {
+  //변경될 수 있는 state를 가지고 있는 위젯
   final String category;
+
   CategoryListView({required this.category});
 
   @override
@@ -24,7 +26,7 @@ class _CategoryListViewState extends State<CategoryListView> {
   //더미데이터
   List<Post> posts = [
     Post(title: "아이폰 팝니다^^", content: "싸게팔아요", price: 1555000, category: '거래', image: ["./assets/iphone.png"], creator: "컴공미남"),
-    Post(title: "아이폰 팝니다^^", content: "싸게나눔", category: '니늠', image: ["./assets/iphone.png"], creator: "컴공미남"),
+    Post(title: "아이폰 팝니다^^", content: "싸게나눔", category: '나늠', image: ["./assets/iphone.png"], creator: "컴공미남"),
     Post(title: "아이폰 팝니다^^", content: "경매", price: 1555000, category: '경매', image: ["./assets/iphone.png"], creator: "컴공미남"),
     Post(title: "아이폰집 팝니다^^", content: "싸게팔아요", price: 1555000, deposit: 10000000, category: '원룸', image: ["./assets/iphone.png"], creator: "컴공미남"),
     Post(title: "아이폰 팝니다^^", content: "싸게팔아요", price: 1555000, category: '거래', image: ["./assets/iphone.png"], creator: "컴공미남"),
@@ -34,8 +36,10 @@ class _CategoryListViewState extends State<CategoryListView> {
     Post(title: "아이폰 팝니다^^", content: "싸게팔아요", price: 1555000, category: '거래', image: ["./assets/iphone.png"], creator: "컴공미남"),
     Post(title: "아이폰 팝니다^^", content: "싸게팔아요", price: 1555000, category: '거래', image: ["./assets/iphone.png"], creator: "컴공미남"),
     Post(title: "아이폰 팝니다^^", content: "싸게팔아요", price: 1555000, category: '거래', image: ["./assets/iphone.png"], creator: "컴공미남"),
-
   ];
+  List<Post> getPostsByCategory() {
+    return posts.where((post) => post.category == widget.category).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,99 +52,39 @@ class _CategoryListViewState extends State<CategoryListView> {
           ),
         ),
         actions: [
+          IconButton(onPressed: () {}, icon: Icon(Icons.search)),
           IconButton(
-              onPressed: (){
-
-              }, icon: Icon(Icons.search)),
-          IconButton(onPressed: (){
-            Navigator.push(context,
-              MaterialPageRoute(
-                builder: (context) => WritingView(),
-              ),
-            );
-          }, icon: Icon(Icons.add)),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => WritingView(),
+                  ),
+                );
+              },
+              icon: Icon(Icons.add)),
         ],
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Colors.grey),
       ),
       drawer: AppDrawer(),
       body: buildBody(),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        items:  <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MainView(),
-                  ),
-                );
-              },
-              child: Column(
-                children: [
-                  Icon(Icons.home),
-                  SizedBox(height: 5),
-                ],
-              ),
-            ),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MessagesView(),
-                  ),
-                );
-              },
-              child: Column(
-                children: [
-                  Icon(Icons.mail),
-                  SizedBox(height: 5),
-                ],
-              ),
-            ),
-            label: 'Messages',
-          ),
-          BottomNavigationBarItem(
-            icon: InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ProfileView(),
-                  ),
-                );
-              },
-              child: Column(
-                children: [
-                  Icon(Icons.person),
-                  SizedBox(height: 5),
-                ],
-              ),
-            ),
-            label: 'Profile',
-          ),
-        ],
-      ),
     );
   }
-  Widget buildBody(){
-    switch (widget.category){
+
+  Widget buildBody() {
+    List<Post> filteredPosts = getPostsByCategory();
+    switch (widget.category) {
       case '거래':
-        return TradeList(); //추후 인자값에 카테고리 추가해서 api 다르게 요청!!
+        return TradeList(posts: filteredPosts); //추후 인자값에 카테고리 추가해서 api 다르게 요청!!
       case '나눔':
-        return ShareList();
+        return ShareList(posts: filteredPosts);
       case '원룸':
-        return OneRoomList();
-      case '경매' :
-        return AuctionList();
+        return OneRoomList(posts: filteredPosts);
+      case '경매':
+        return AuctionList(posts: filteredPosts);
       default:
-        return PostList();
+        return PostList(posts : posts);
     }
   }
 }
@@ -155,8 +99,8 @@ class AppDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: [
           DrawerHeader(
-            child: Image.asset(
-                './assets/healthicons_market-stall-negative.png'),
+            child:
+                Image.asset('./assets/healthicons_market-stall-negative.png'),
             decoration: BoxDecoration(
               color: Colors.white,
             ),
@@ -170,8 +114,7 @@ class AppDrawer extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => CategoryListView(category: '거래'),
-                  )
-              );
+                  ));
             },
           ),
           ListTile(
@@ -183,8 +126,7 @@ class AppDrawer extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => CategoryListView(category: '경매'),
-                  )
-              );
+                  ));
             },
           ),
           ListTile(
@@ -196,8 +138,7 @@ class AppDrawer extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => CategoryListView(category: '나눔'),
-                  )
-              );
+                  ));
             },
           ),
           ListTile(
@@ -209,8 +150,7 @@ class AppDrawer extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => CategoryListView(category: '원룸'),
-                  )
-              );
+                  ));
             },
           ),
         ],
@@ -220,41 +160,49 @@ class AppDrawer extends StatelessWidget {
 }
 
 class PostList extends StatefulWidget {
-  const PostList({super.key});
+  final List<Post> posts;
+  const PostList({required this.posts, Key? key}) : super(key: key);
 
   @override
   State<PostList> createState() => _PostListState();
 }
 
+/**
+ * 전체
+ */
 class _PostListState extends State<PostList> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      // itemCount: 10, // 게시글 수
+      itemCount: widget.posts.length, // 게시글 수
       itemBuilder: (context, index) {
         return Card(
           margin: const EdgeInsets.all(8.0),
           child: ListTile(
-            leading: Image.asset("./assets/iphone.png"), // 물품 사진
-            title: Text('아아폰 팝니다^^'), // 게시글 제목 - 이건 동일
-            subtitle: Text('1,555,000원'), // 가격, 
-            /*onTap: () {
-
-              Navigator.push(context,
+            leading: Image.asset(widget.posts[index].image.first), // 물품 사진
+            title: Text(widget.posts[index].title), // 게시글 제목
+            subtitle: Text('${widget.posts[index].price}원'), // 가격
+            onTap: () {
+              Navigator.push(
+                context,
                 MaterialPageRoute(
-                  builder: (context) => DetailView(postIndex: index),
+                  builder: (context) => DetailView(post: widget.posts[index]),
                 ),
               );
-            },*/
+            },
           ),
         );
       },
     );
   }
 }
-
+/**
+ * 거래
+ */
 class TradeList extends StatefulWidget {
-  const TradeList({super.key});
+  final List<Post> posts;
+
+  const TradeList({required this.posts, Key? key}) : super(key: key);
 
   @override
   State<TradeList> createState() => _TradeListState();
@@ -264,31 +212,34 @@ class _TradeListState extends State<TradeList> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: 10, // 게시글 수
+      itemCount: widget.posts.length, // 게시글 수
       itemBuilder: (context, index) {
         return Card(
           margin: const EdgeInsets.all(8.0),
           child: ListTile(
-            leading: Image.asset("./assets/iphone.png"), // 물품 사진
-            title: Text('아아폰 팝니다^^'), // 게시글 제목 - 이건 동일
-            subtitle: Text('1,555,000원'), // 가격,
-            /*onTap: () {
+            leading: Image.asset(widget.posts[index].image.first), // 물품 사진
+            title: Text(widget.posts[index].title), // 게시글 제목 - 이건 동일
+            subtitle: Text('${widget.posts[index].price}원'), // 가격,
+            onTap: () {
 
               Navigator.push(context,
                 MaterialPageRoute(
-                  builder: (context) => DetailView(postIndex: index),
+                  builder: (context) => DetailView(post: widget.posts[index]),
                 ),
               );
-            },*/
+            },
           ),
         );
       },
     );
   }
 }
-
+/**
+ * 경매
+ */
 class AuctionList extends StatefulWidget {
-  const AuctionList({super.key});
+  final List<Post> posts;
+  const AuctionList({required this.posts, Key? key}) : super(key: key);
 
   @override
   State<AuctionList> createState() => _AuctionListState();
@@ -298,32 +249,34 @@ class _AuctionListState extends State<AuctionList> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: 10, // 게시글 수
+      itemCount: widget.posts.length, // 게시글 수
       itemBuilder: (context, index) {
         return Card(
           margin: const EdgeInsets.all(8.0),
           child: ListTile(
-            leading: Image.asset("./assets/iphone.png"), // 물품 사진
-            title: Text('아아폰 경매요^^'), // 게시글 제목 - 이건 동일
-            subtitle: Text('1,555,000원부터'), // 가격,
-            /*onTap: () {
+            leading: Image.asset(widget.posts[index].image.first), // 물품 사진
+            title: Text(widget.posts[index].title),// 게시글 제목 - 이건 동일
+            subtitle: Text('${widget.posts[index].price}원부터~'), // 가격,
+            onTap: () {
 
               Navigator.push(context,
                 MaterialPageRoute(
-                  builder: (context) => DetailView(postIndex: index),
+                  builder: (context) => DetailView(post : widget.posts[index]),
                 ),
               );
-            },*/
+            },
           ),
         );
       },
     );
   }
 }
-
-
+/**
+ * 나눔
+ */
 class ShareList extends StatefulWidget {
-  const ShareList({super.key});
+  final List<Post> posts;
+  const ShareList({required this.posts, Key? key}) : super(key: key);
 
   @override
   State<ShareList> createState() => _ShareListState();
@@ -333,32 +286,34 @@ class _ShareListState extends State<ShareList> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: 10, // 게시글 수
+      itemCount: widget.posts.length, // 게시글 수
       itemBuilder: (context, index) {
         return Card(
           margin: const EdgeInsets.all(8.0),
           child: ListTile(
-            leading: Image.asset("./assets/iphone.png"), // 물품 사진
-            title: Text('부자됐슴.아이폰 나눔합니다'), // 게시글 제목 - 이건 동일
+            leading: Image.asset(widget.posts[index].image.first), // 물품 사진
+            title: Text(widget.posts[index].title), // 게시글 제목 - 이건 동일
             subtitle: Text('무료'), // 가격,
-            /*onTap: () {
+            onTap: () {
 
               Navigator.push(context,
                 MaterialPageRoute(
-                  builder: (context) => DetailView(postIndex: index),
+                  builder: (context) => DetailView(post : widget.posts[index]),
                 ),
               );
-            },*/
+            },
           ),
         );
       },
     );
   }
 }
-
-
+/**
+ * 원룸
+ */
 class OneRoomList extends StatefulWidget {
-  const OneRoomList({super.key});
+  final List<Post> posts;
+  const OneRoomList({required this.posts, Key? key}) : super(key: key);
 
   @override
   State<OneRoomList> createState() => _OneRoomListState();
@@ -368,26 +323,25 @@ class _OneRoomListState extends State<OneRoomList> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: 10, // 게시글 수
+      itemCount: widget.posts.length, // 게시글 수
       itemBuilder: (context, index) {
         return Card(
           margin: const EdgeInsets.all(8.0),
           child: ListTile(
-            leading: Image.asset("./assets/iphone.png"), // 물품 사진
-            title: Text('서천동 원룸 양도합니다'), // 게시글 제목 - 이건 동일
-            subtitle: Text('400/50'), // 가격,
-            /*onTap: () {
+            leading: Image.asset(widget.posts[index].image.first), // 물품 사진
+            title: Text(widget.posts[index].title),// 게시글 제목 - 이건 동일
+            subtitle: Text('${widget.posts[index].price}/${widget.posts[index].deposit}'),  // 가격,
+            onTap: () {
 
               Navigator.push(context,
                 MaterialPageRoute(
-                  builder: (context) => DetailView(postIndex: index),
+                  builder: (context) => DetailView(post :widget.posts[index]),
                 ),
               );
-            },*/
+            },
           ),
         );
       },
     );
   }
 }
-
