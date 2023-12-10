@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kyunghee_market/view/messageroom_view.dart';
 import 'package:kyunghee_market/view/writing_view.dart';
@@ -115,8 +116,7 @@ class _DetailViewState extends State<DetailView> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => WritingView(
-                                ),
+                                builder: (context) => WritingView(),
                               ),
                             );
                           } else if (value == 'delete') {
@@ -124,7 +124,7 @@ class _DetailViewState extends State<DetailView> {
                           }
                         },
                         itemBuilder: (BuildContext context) =>
-                        <PopupMenuEntry<String>>[
+                            <PopupMenuEntry<String>>[
                           const PopupMenuItem<String>(
                             value: 'modify',
                             child: ListTile(
@@ -185,21 +185,19 @@ class _DetailViewState extends State<DetailView> {
                       },
                       child: Row(
                         children: [
-                          Image.asset('./assets/auction.png'),
+                          Image.asset('./assets/auction.png',
+                              color: Colors.white),
                           SizedBox(width: 3),
                           Text('입찰'),
                         ],
                       ),
                       style: ElevatedButton.styleFrom(
-                        primary: Color.fromRGBO(157, 28, 32, 1),
-                        onPrimary: Colors.white,
-                        textStyle: TextStyle(
-                          fontSize: 15
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
-                        )
-                      ),
+                          primary: Color.fromRGBO(157, 28, 32, 1),
+                          onPrimary: Colors.white,
+                          textStyle: TextStyle(fontSize: 15),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          )),
                     ),
                 ],
               ),
@@ -248,19 +246,22 @@ class _DetailViewState extends State<DetailView> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('정말 삭제할까요?', style: TextStyle(
-            fontWeight: FontWeight.bold
-          ),),
+          title: Text(
+            '정말 삭제할까요?',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
           content: Text('삭제하면 복구할 수 없어요!'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text('취소', style:TextStyle(
-                color:  Color.fromRGBO(157, 28, 32, 1),
-                fontWeight: FontWeight.bold
-              ),),
+              child: Text(
+                '취소',
+                style: TextStyle(
+                    color: Color.fromRGBO(157, 28, 32, 1),
+                    fontWeight: FontWeight.bold),
+              ),
             ),
             TextButton(
               onPressed: () {
@@ -268,19 +269,22 @@ class _DetailViewState extends State<DetailView> {
                 // Delete the post and navigate back or perform any other necessary actions
                 Navigator.pop(context); // Close the confirmation dialog
               },
-              child: Text('삭제',style: TextStyle(
-                color:  Color.fromRGBO(157, 28, 32, 1),
-                fontWeight: FontWeight.bold
-              ),),
+              child: Text(
+                '삭제',
+                style: TextStyle(
+                    color: Color.fromRGBO(157, 28, 32, 1),
+                    fontWeight: FontWeight.bold),
+              ),
             ),
           ],
         );
       },
     );
   }
+
   Widget _buildPriceInfo(Post post) {
     if (post.category == '원룸') {
-      return Text(' ${post.deposit}/${post.price}원',
+      return Text('보증금 ${post.deposit}/${post.price}',
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold));
     } else if (post.category == '나눔') {
       return Text('나눔',
@@ -293,11 +297,14 @@ class _DetailViewState extends State<DetailView> {
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold));
     }
   }
+
   Widget _getWidgetForCategory(Post post) {
     if (widget.post.category == '경매') {
       return SizedBox(width: 10.0); // Set the width for the '경매' category
+    } else if (widget.post.category == '원룸') {
+      return SizedBox(width: 5.0); // Use Spacer for other categories
     } else {
-      return Spacer(); // Use Spacer for other categories
+      return Spacer();
     }
   }
 
@@ -317,42 +324,119 @@ class _DetailViewState extends State<DetailView> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('원하는 가격에 get it!'),
-          content: Column(
+          title: Column(
             children: [
-              // 경매 시작가격 표시
-              Text('경매 시작가격: ${widget.post.price}원'),
-              SizedBox(height: 16),
-              // 현재 입찰가 표시 (추후에 실제 값으로 변경)
-              Text('현재 입찰가: 1,000,000원'),
-              SizedBox(height: 16),
-              // 구매 희망가 입력 필드
-              TextField(
-                // controller: bidPriceController,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  labelText: '구매 희망가를 입력하세요',
-                ),
+              Image.asset('./assets/auction.png'),
+              SizedBox(height: 7),
+              Text(
+                '원하는 가격에 get it!',
+                style: TextStyle(color: Colors.grey, fontSize: 18),
               ),
             ],
           ),
+          content: Container(
+            height: 300,
+            width: 300,
+            child: Column(
+              children: [
+                // 경매 시작가격 표시
+                Text('경매 시작가격'),
+                SizedBox(height: 10),
+                Container(
+                  padding: EdgeInsets.all(8),
+                  height: 40,
+                  width: 200,
+                  decoration: BoxDecoration(
+                    border: null,
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Center(
+                    child: Text(
+                      '${widget.post.price}원',
+                      style: TextStyle(
+                          fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 16),
+                Text('현재 입찰가'),
+                SizedBox(height: 10),
+                Container(
+                  padding: EdgeInsets.all(8),
+                  height: 40,
+                  width: 200,
+                  decoration: BoxDecoration(
+                    border: null,
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Center(
+                    child: Text(
+                      '2000000원',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 16),
+                Text('구매희망가'),
+                SizedBox(height: 10),
+                Container(
+                  padding: EdgeInsets.all(8),
+                  height: 40,
+                  width: 200,
+                  decoration: BoxDecoration(
+                    border: null,
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Center(
+                    child: TextField(
+                      // controller: bidPriceController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: '구매 희망가를 입력하세요',
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
           actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text('취소'),
-            ),
-            TextButton(
-              onPressed: () {
-                // TODO: 입찰 처리 로직 추가
-                // String bidPrice = bidPriceController.text;
-                // 실제로 서버에 입찰을 보내는 등의 로직을 수행해야 함
-                // print('입찰가: $bidPrice');
-                Navigator.pop(context);
-              },
-              child: Text('입찰하기'),
-            ),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  '취소',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                style: ElevatedButton.styleFrom(
+                    primary: Color.fromRGBO(157, 28, 32, 1),
+                    onPrimary: Colors.white)),
+            ElevatedButton(
+                onPressed: () {
+                  // TODO: 입찰 처리 로직 추가
+                  // String bidPrice = bidPriceController.text;
+                  // print('입찰가: $bidPrice');
+                  Navigator.pop(context);
+                  Fluttertoast.showToast(
+                    msg: '입찰이 완료되었습니다.',
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    backgroundColor: Colors.black,
+                    textColor: Colors.white,
+                  );
+                },
+                child: Text(
+                  '입찰하기',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                style: ElevatedButton.styleFrom(
+                    primary: Color.fromRGBO(157, 28, 32, 1),
+                    onPrimary: Colors.white)),
           ],
         );
       },

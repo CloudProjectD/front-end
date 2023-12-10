@@ -32,7 +32,7 @@ class _MyAppState extends State<MyApp> {
         // '/authentication': (context) => AuthenticationView(),
         // '/nickname': (context) => NicknameView(),
         '/profile': (context) => ProfileView(),
-        // '/app': (context) => HomePage(),
+        '/app': (context) => HomePage(),
         '/main': (context) => MainView(),
         '/messages': (context) => MessagesView(),
         '/messageroom': (context) => MessageRoomView(),

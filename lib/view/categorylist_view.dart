@@ -25,18 +25,85 @@ class CategoryListView extends StatefulWidget {
 class _CategoryListViewState extends State<CategoryListView> {
   //더미데이터
   List<Post> posts = [
-    Post(title: "아이폰 팝니다^^", content: "싸게팔아요", price: 1555000, category: '거래', image: ["./assets/iphone.png"], creator: "컴공미남"),
-    Post(title: "아이폰 팝니다^^", content: "싸게나눔", category: '나늠', image: ["./assets/iphone.png"], creator: "컴공미남"),
-    Post(title: "아이폰 팝니다^^", content: "경매", price: 1555000, category: '경매', image: ["./assets/iphone.png"], creator: "컴공미남"),
-    Post(title: "아이폰집 팝니다^^", content: "싸게팔아요", price: 1555000, deposit: 10000000, category: '원룸', image: ["./assets/iphone.png"], creator: "컴공미남"),
-    Post(title: "아이폰 팝니다^^", content: "싸게팔아요", price: 1555000, category: '거래', image: ["./assets/iphone.png"], creator: "컴공미남"),
-    Post(title: "아이폰 팝니다^^", content: "싸게팔아요", price: 1555000, category: '거래', image: ["./assets/iphone.png"], creator: "컴공미남"),
-    Post(title: "아이폰 팝니다^^", content: "싸게팔아요", price: 1555000, category: '거래', image: ["./assets/iphone.png"], creator: "컴공미남"),
-    Post(title: "아이폰 팝니다^^", content: "싸게팔아요", price: 1555000, category: '거래', image: ["./assets/iphone.png"], creator: "컴공미남"),
-    Post(title: "아이폰 팝니다^^", content: "싸게팔아요", price: 1555000, category: '거래', image: ["./assets/iphone.png"], creator: "컴공미남"),
-    Post(title: "아이폰 팝니다^^", content: "싸게팔아요", price: 1555000, category: '거래', image: ["./assets/iphone.png"], creator: "컴공미남"),
-    Post(title: "아이폰 팝니다^^", content: "싸게팔아요", price: 1555000, category: '거래', image: ["./assets/iphone.png"], creator: "컴공미남"),
+    Post(
+        title: "아이폰 팝니다^^",
+        content: "싸게팔아요",
+        price: 1555000,
+        category: '거래',
+        image: ["./assets/iphone.png"],
+        creator: "컴공미남"),
+    Post(
+        title: "아이폰 공짜로 가져가세요",
+        content: "꽁으로 가져가라",
+        category: '나눔',
+        image: ["./assets/iphone.png"],
+        creator: "컴공미남"),
+    Post(
+        title: "아이폰 팝니다^^",
+        content: "경매",
+        price: 1555000,
+        category: '경매',
+        image: ["./assets/iphone.png"],
+        creator: "컴공미남"),
+    Post(
+        title: "아이폰집 팝니다^^",
+        content: "싸게팔아요",
+        price: 50,
+        deposit: 1000,
+        category: '원룸',
+        image: ["./assets/iphone.png"],
+        creator: "컴공미남"),
+    Post(
+        title: "아이폰 팝니다^^",
+        content: "싸게팔아요",
+        price: 1555000,
+        category: '거래',
+        image: ["./assets/iphone.png"],
+        creator: "컴공미남"),
+    Post(
+        title: "아이폰 팝니다^^",
+        content: "싸게팔아요",
+        price: 1555000,
+        category: '거래',
+        image: ["./assets/iphone.png"],
+        creator: "컴공미남"),
+    Post(
+        title: "아이폰 팝니다^^",
+        content: "싸게팔아요",
+        price: 1555000,
+        category: '거래',
+        image: ["./assets/iphone.png"],
+        creator: "컴공미남"),
+    Post(
+        title: "아이폰 팝니다^^",
+        content: "싸게팔아요",
+        price: 1555000,
+        category: '거래',
+        image: ["./assets/iphone.png"],
+        creator: "컴공미남"),
+    Post(
+        title: "아이폰 팝니다^^",
+        content: "싸게팔아요",
+        price: 1555000,
+        category: '거래',
+        image: ["./assets/iphone.png"],
+        creator: "컴공미남"),
+    Post(
+        title: "아이폰 팝니다^^",
+        content: "싸게팔아요",
+        price: 1555000,
+        category: '거래',
+        image: ["./assets/iphone.png"],
+        creator: "컴공미남"),
+    Post(
+        title: "아이폰 팝니다^^",
+        content: "싸게팔아요",
+        price: 1555000,
+        category: '거래',
+        image: ["./assets/iphone.png"],
+        creator: "컴공미남"),
   ];
+
   List<Post> getPostsByCategory() {
     return posts.where((post) => post.category == widget.category).toList();
   }
@@ -84,7 +151,7 @@ class _CategoryListViewState extends State<CategoryListView> {
       case '경매':
         return AuctionList(posts: filteredPosts);
       default:
-        return PostList(posts : posts);
+        return PostList(posts: posts);
     }
   }
 }
@@ -161,6 +228,7 @@ class AppDrawer extends StatelessWidget {
 
 class PostList extends StatefulWidget {
   final List<Post> posts;
+
   const PostList({required this.posts, Key? key}) : super(key: key);
 
   @override
@@ -196,6 +264,7 @@ class _PostListState extends State<PostList> {
     );
   }
 }
+
 /**
  * 거래
  */
@@ -221,8 +290,8 @@ class _TradeListState extends State<TradeList> {
             title: Text(widget.posts[index].title), // 게시글 제목 - 이건 동일
             subtitle: Text('${widget.posts[index].price}원'), // 가격,
             onTap: () {
-
-              Navigator.push(context,
+              Navigator.push(
+                context,
                 MaterialPageRoute(
                   builder: (context) => DetailView(post: widget.posts[index]),
                 ),
@@ -234,11 +303,13 @@ class _TradeListState extends State<TradeList> {
     );
   }
 }
+
 /**
  * 경매
  */
 class AuctionList extends StatefulWidget {
   final List<Post> posts;
+
   const AuctionList({required this.posts, Key? key}) : super(key: key);
 
   @override
@@ -255,13 +326,13 @@ class _AuctionListState extends State<AuctionList> {
           margin: const EdgeInsets.all(8.0),
           child: ListTile(
             leading: Image.asset(widget.posts[index].image.first), // 물품 사진
-            title: Text(widget.posts[index].title),// 게시글 제목 - 이건 동일
+            title: Text(widget.posts[index].title), // 게시글 제목 - 이건 동일
             subtitle: Text('${widget.posts[index].price}원부터~'), // 가격,
             onTap: () {
-
-              Navigator.push(context,
+              Navigator.push(
+                context,
                 MaterialPageRoute(
-                  builder: (context) => DetailView(post : widget.posts[index]),
+                  builder: (context) => DetailView(post: widget.posts[index]),
                 ),
               );
             },
@@ -271,11 +342,13 @@ class _AuctionListState extends State<AuctionList> {
     );
   }
 }
+
 /**
  * 나눔
  */
 class ShareList extends StatefulWidget {
   final List<Post> posts;
+
   const ShareList({required this.posts, Key? key}) : super(key: key);
 
   @override
@@ -295,10 +368,10 @@ class _ShareListState extends State<ShareList> {
             title: Text(widget.posts[index].title), // 게시글 제목 - 이건 동일
             subtitle: Text('무료'), // 가격,
             onTap: () {
-
-              Navigator.push(context,
+              Navigator.push(
+                context,
                 MaterialPageRoute(
-                  builder: (context) => DetailView(post : widget.posts[index]),
+                  builder: (context) => DetailView(post: widget.posts[index]),
                 ),
               );
             },
@@ -308,11 +381,13 @@ class _ShareListState extends State<ShareList> {
     );
   }
 }
+
 /**
  * 원룸
  */
 class OneRoomList extends StatefulWidget {
   final List<Post> posts;
+
   const OneRoomList({required this.posts, Key? key}) : super(key: key);
 
   @override
@@ -328,14 +403,18 @@ class _OneRoomListState extends State<OneRoomList> {
         return Card(
           margin: const EdgeInsets.all(8.0),
           child: ListTile(
-            leading: Image.asset(widget.posts[index].image.first), // 물품 사진
-            title: Text(widget.posts[index].title),// 게시글 제목 - 이건 동일
-            subtitle: Text('${widget.posts[index].price}/${widget.posts[index].deposit}'),  // 가격,
+            leading: Image.asset(widget.posts[index].image.first),
+            // 물품 사진
+            title: Text(widget.posts[index].title),
+            // 게시글 제목 - 이건 동일
+            subtitle: Text(
+                '${widget.posts[index].price}/${widget.posts[index].deposit}'),
+            // 가격,
             onTap: () {
-
-              Navigator.push(context,
+              Navigator.push(
+                context,
                 MaterialPageRoute(
-                  builder: (context) => DetailView(post :widget.posts[index]),
+                  builder: (context) => DetailView(post: widget.posts[index]),
                 ),
               );
             },

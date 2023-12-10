@@ -35,6 +35,15 @@ class _WritingViewState extends State<WritingView> {
       });
     }
   }
+  //버튼 활성화
+  TextEditingController _titleFieldController = TextEditingController();
+  TextEditingController _contentFieldController = TextEditingController();
+  TextEditingController _priceFieldController = TextEditingController();
+  bool isButtonEnabled() {
+    return _titleFieldController.text.isNotEmpty && _contentFieldController.text.isNotEmpty
+            && _priceFieldController.text.isNotEmpty;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,16 +86,22 @@ class _WritingViewState extends State<WritingView> {
               SizedBox(height: 16),
               Text('제목'),
               TextField(
+                controller: _titleFieldController,
                 decoration: InputDecoration(
                   labelText: '제목',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15.0),
                   ),
                 ),
+                onChanged: (text) {
+                  setState(() {
+                  });
+                },
               ),
               SizedBox(height: 16),
               Text('설명'),
               TextField(
+                controller: _contentFieldController,
                 maxLines: 5,
                 decoration: InputDecoration(
                   labelText: '설명',
@@ -94,6 +109,10 @@ class _WritingViewState extends State<WritingView> {
                     borderRadius: BorderRadius.circular(15.0),
                   ),
                 ),
+                onChanged: (text){
+                  setState(() {
+                  });
+                },
               ),
               SizedBox(height: 16),
               Row(
@@ -168,6 +187,7 @@ class _WritingViewState extends State<WritingView> {
               SizedBox(height: 16),
               if(transactionType == '거래')
                 TextField(
+                  controller: _priceFieldController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     labelText: '거래 가격',
@@ -175,6 +195,10 @@ class _WritingViewState extends State<WritingView> {
                       borderRadius: BorderRadius.circular(15.0),
                     ),
                   ),
+                  onChanged: (text){
+                    setState(() {
+                    });
+                  },
                 )
               else if(transactionType == '경매')
                 Column(
@@ -205,6 +229,7 @@ class _WritingViewState extends State<WritingView> {
                     SizedBox(height: 16),
                     Text('경매 시작가'),
                     TextField(
+                      controller: _priceFieldController,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         labelText: '경매 시작가',
@@ -212,11 +237,16 @@ class _WritingViewState extends State<WritingView> {
                           borderRadius: BorderRadius.circular(15.0),
                         ),
                       ),
+                      onChanged: (text){
+                        setState(() {
+                        });
+                      },
                     ),
                   ],
                 )
               else if(transactionType=='원룸')
                   Column(
+                    //보증금 controller 추가해야할것
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: 16),
@@ -233,6 +263,7 @@ class _WritingViewState extends State<WritingView> {
                       SizedBox(height: 16),
                       Text('월세'),
                       TextField(
+                        controller: _priceFieldController,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           labelText: '월세',
@@ -240,12 +271,17 @@ class _WritingViewState extends State<WritingView> {
                             borderRadius: BorderRadius.circular(15.0),
                           ),
                         ),
+                        onChanged: (text){
+                          setState(() {
+
+                          });
+                        },
                       ),
                     ],
                   ),
               SizedBox(height: 50),
               ElevatedButton(
-                  onPressed: () {},
+                  onPressed: isButtonEnabled() ? () => _onSubmit() : null,
                   child: Text(
                     '완료',
                     style: TextStyle(color: Colors.white),
@@ -276,4 +312,19 @@ class _WritingViewState extends State<WritingView> {
 
   }
    */
+
+  void _onSubmit() {
+    /**
+     * TODO
+     */
+    Navigator.pushNamed(context, '/app');
+  }
+
+  @override
+  void dispose() {
+    _titleFieldController.dispose();
+    _contentFieldController.dispose();
+    _priceFieldController.dispose();
+    super.dispose();
+  }
 }

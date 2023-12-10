@@ -13,7 +13,7 @@ class LikeListView extends StatefulWidget {
 class _LikeListViewState extends State<LikeListView> {
   List<Post> posts = [
     Post(title: "아이폰 팝니다^^", content: "싸게팔아요", price: 1555000, category: '거래', image: ["./assets/iphone.png"], creator: "컴공미남"),
-    Post(title: "아이폰 팝니다^^", content: "싸게나눔", category: '니늠', image: ["./assets/iphone.png"], creator: "컴공미남"),
+    Post(title: "아이폰 팝니다^^", content: "나눔", category: '나눔', image: ["./assets/iphone.png"], creator: "컴공미남"),
     Post(title: "아이폰 팝니다^^", content: "경매", price: 1555000, category: '경매', image: ["./assets/iphone.png"], creator: "컴공미남"),
     Post(title: "아이폰집 팝니다^^", content: "싸게팔아요", price: 1555000, deposit: 10000000, category: '원룸', image: ["./assets/iphone.png"], creator: "컴공미남"),
     Post(title: "아이폰 팝니다^^", content: "싸게팔아요", price: 1555000, category: '거래', image: ["./assets/iphone.png"], creator: "컴공미남"),
