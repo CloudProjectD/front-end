@@ -84,7 +84,9 @@ class _DetailViewState extends State<DetailView> {
                   ),
                   Spacer(),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(context, "/report");
+                    },
                     child: Image.asset(
                       './assets/siren.png',
                       width: 24,

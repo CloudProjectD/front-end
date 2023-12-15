@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -8,20 +9,24 @@ class WritingView extends StatefulWidget {
   @override
   State<WritingView> createState() => _WritingViewState();
 }
+
 class _WritingViewState extends State<WritingView> {
   String transactionType = '거래';
   final ImagePicker picker = ImagePicker();
-  List<XFile?> _pickedImgs = [];
+  List<XFile?> _pickedImgs = []; //갤러리에서 갸져올 이미지 리스트 변수
+  List<XFile?> showImgs = [];
   DateTime? _selectedDate;
 
+  //이미지 선택함수
   Future<void> _pickImg() async {
     final List<XFile?> images = await picker.pickMultiImage();
-    if(images!=null){
-      setState((){
+    if (images != null) {
+      setState(() {
         _pickedImgs = images;
       });
     }
   }
+
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -35,13 +40,16 @@ class _WritingViewState extends State<WritingView> {
       });
     }
   }
+
   //버튼 활성화
   TextEditingController _titleFieldController = TextEditingController();
   TextEditingController _contentFieldController = TextEditingController();
   TextEditingController _priceFieldController = TextEditingController();
+
   bool isButtonEnabled() {
-    return _titleFieldController.text.isNotEmpty && _contentFieldController.text.isNotEmpty
-            && _priceFieldController.text.isNotEmpty;
+    return _titleFieldController.text.isNotEmpty &&
+        _contentFieldController.text.isNotEmpty &&
+        _priceFieldController.text.isNotEmpty;
   }
 
   @override
@@ -64,25 +72,130 @@ class _WritingViewState extends State<WritingView> {
                 ),
               ),
               SizedBox(height: 5),
-              /*
-              Row(
-                  GestureDetector(
-                      onTap: () => _getImage(index),
-                      Icon(
-                                Icons.camera_alt,
-                                size: 20,
-                                color: Colors.white,
-                      )
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Container(
+                  // width: 1000,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 80,
+                        height: 80,
+                        margin: EdgeInsets.only(right: 10),
+                        padding: EdgeInsets.all(5),
                         decoration: BoxDecoration(
-                          color: Colors.grey,
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(color: Colors.black),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 0.5,
+                                  blurRadius: 5)
+                            ]),
+                        child: IconButton(
+                            onPressed: () async {
+                              _pickedImgs = await picker.pickMultiImage();
+                              setState(() {
+                                showImgs.addAll(_pickedImgs);
+                              });
+                            },
+                            icon: Icon(
+                              Icons.add_a_photo_outlined,
+                              size: 30,
+                              color: Colors.grey,
+                            )),
                       ),
-                    ),
+                      // SizedBox(width: 10),
+                      ...showImgs.map((img) {
+                        return Container(
+                          width: 80,
+                          height: 80,
+                          margin: EdgeInsets.only(right: 10), // 간격을 margin으로 추가
+                          child: Stack(
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: FileImage(File(img!.path)),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.black,
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                child: IconButton(
+                                  padding: EdgeInsets.zero,
+                                  constraints: BoxConstraints(),
+                                  icon: Icon(Icons.close, color: Colors.white, size: 15),
+                                  onPressed: () {
+                                    setState(() {
+                                      showImgs.remove(img);
+                                    });
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }),
+                      // Container(
+                      //   child: GridView.builder(
+                      //       padding: EdgeInsets.all(0),
+                      //       shrinkWrap: true,
+                      //       itemCount: showImgs.length,
+                      //       gridDelegate:
+                      //           SliverGridDelegateWithFixedCrossAxisCount(
+                      //             crossAxisCount: 5,
+                      //             childAspectRatio: 1.5,
+                      //             mainAxisSpacing: 10,
+                      //             crossAxisSpacing: 10,
+                      //       ),
+                      //       itemBuilder: (BuildContext context, int index) {
+                      //         return Stack(
+                      //           // alignment: Alignment.topRight,
+                      //           children: [
+                      //             Container(
+                      //               decoration: BoxDecoration(
+                      //                   borderRadius: BorderRadius.circular(5),
+                      //                   image: DecorationImage(
+                      //                       fit: BoxFit.cover,
+                      //                       //사진 크기를 Container 크기에 맞게 조절
+                      //                       image: FileImage(File(showImgs[index]!
+                      //                               .path // images 리스트 변수 안에 있는 사진들을 순서대로 표시함
+                      //                           )))),
+                      //             ),
+                      //             Container(
+                      //                 decoration: BoxDecoration(
+                      //                   color: Colors.black,
+                      //                   borderRadius: BorderRadius.circular(5),
+                      //                 ),
+                      //                 //삭제 버튼
+                      //                 child: IconButton(
+                      //                   padding: EdgeInsets.zero,
+                      //                   constraints: BoxConstraints(),
+                      //                   icon: Icon(Icons.close,
+                      //                       color: Colors.white, size: 15),
+                      //                   onPressed: () {
+                      //                     //버튼을 누르면 해당 이미지가 삭제됨
+                      //                     setState(() {
+                      //                       showImgs.remove(showImgs[index]);
+                      //                     });
+                      //                   },
+                      //                 ))
+                      //           ],
+                      //         );
+                      //       }),
+                      // )
+                    ],
                   ),
                 ),
               ),
-               */
               SizedBox(height: 16),
               Text('제목'),
               TextField(
@@ -94,8 +207,7 @@ class _WritingViewState extends State<WritingView> {
                   ),
                 ),
                 onChanged: (text) {
-                  setState(() {
-                  });
+                  setState(() {});
                 },
               ),
               SizedBox(height: 16),
@@ -109,9 +221,8 @@ class _WritingViewState extends State<WritingView> {
                     borderRadius: BorderRadius.circular(15.0),
                   ),
                 ),
-                onChanged: (text){
-                  setState(() {
-                  });
+                onChanged: (text) {
+                  setState(() {});
                 },
               ),
               SizedBox(height: 16),
@@ -185,7 +296,7 @@ class _WritingViewState extends State<WritingView> {
                 ],
               ),
               SizedBox(height: 16),
-              if(transactionType == '거래')
+              if (transactionType == '거래')
                 TextField(
                   controller: _priceFieldController,
                   keyboardType: TextInputType.number,
@@ -195,37 +306,35 @@ class _WritingViewState extends State<WritingView> {
                       borderRadius: BorderRadius.circular(15.0),
                     ),
                   ),
-                  onChanged: (text){
-                    setState(() {
-                    });
+                  onChanged: (text) {
+                    setState(() {});
                   },
                 )
-              else if(transactionType == '경매')
+              else if (transactionType == '경매')
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: 16),
                     Text('경매 마감일'),
-                    Row(
-                      children: [
-                        ElevatedButton(
-                          onPressed: () => _selectDate(context),
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.white,
-                            onPrimary: Colors.black,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15.0),
-                            ),
-                            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                    Row(children: [
+                      ElevatedButton(
+                        onPressed: () => _selectDate(context),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.white,
+                          onPrimary: Colors.black,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
                           ),
-                          child: Text(
-                            _selectedDate == null
-                                ? '날짜 선택'
-                                : '${_selectedDate!.year}-${_selectedDate!.month}-${_selectedDate!.day}',
-                          ),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 15),
                         ),
-                      ]
-                    ),
+                        child: Text(
+                          _selectedDate == null
+                              ? '날짜 선택'
+                              : '${_selectedDate!.year}-${_selectedDate!.month}-${_selectedDate!.day}',
+                        ),
+                      ),
+                    ]),
                     SizedBox(height: 16),
                     Text('경매 시작가'),
                     TextField(
@@ -237,48 +346,45 @@ class _WritingViewState extends State<WritingView> {
                           borderRadius: BorderRadius.circular(15.0),
                         ),
                       ),
-                      onChanged: (text){
-                        setState(() {
-                        });
+                      onChanged: (text) {
+                        setState(() {});
                       },
                     ),
                   ],
                 )
-              else if(transactionType=='원룸')
-                  Column(
-                    //보증금 controller 추가해야할것
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 16),
-                      Text('보증금'),
-                      TextField(
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          labelText: '보증금',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
+              else if (transactionType == '원룸')
+                Column(
+                  //보증금 controller 추가해야할것
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 16),
+                    Text('보증금'),
+                    TextField(
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: '보증금',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15.0),
                         ),
                       ),
-                      SizedBox(height: 16),
-                      Text('월세'),
-                      TextField(
-                        controller: _priceFieldController,
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          labelText: '월세',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
+                    ),
+                    SizedBox(height: 16),
+                    Text('월세'),
+                    TextField(
+                      controller: _priceFieldController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: '월세',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15.0),
                         ),
-                        onChanged: (text){
-                          setState(() {
-
-                          });
-                        },
                       ),
-                    ],
-                  ),
+                      onChanged: (text) {
+                        setState(() {});
+                      },
+                    ),
+                  ],
+                ),
               SizedBox(height: 50),
               ElevatedButton(
                   onPressed: isButtonEnabled() ? () => _onSubmit() : null,
@@ -317,6 +423,7 @@ class _WritingViewState extends State<WritingView> {
     /**
      * TODO
      */
+
     Navigator.pushNamed(context, '/app');
   }
 

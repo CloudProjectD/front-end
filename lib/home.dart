@@ -19,12 +19,12 @@ class _HomePageState extends State<HomePage> {
     MessagesView(),
     ProfileView(),
   ];
+  final BottomController _bottomController = Get.put(BottomController());
 
   @override
   Widget build(BuildContext context) {
     //페이지 전환을 위한 BottomController 인스턴스화(의존성 주입)
     //Get put : 수명이 페이지와 같음
-    Get.put(BottomController());
 
     return Scaffold(
       body: Obx(() =>

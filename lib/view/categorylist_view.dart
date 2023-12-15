@@ -1,8 +1,12 @@
 import "package:flutter/material.dart";
+import "package:get/get.dart";
+import "package:get/get_core/src/get_main.dart";
 import "package:kyunghee_market/view/messages_view.dart";
 import "package:kyunghee_market/view/profile_view.dart";
 import "package:kyunghee_market/view/writing_view.dart";
+import "package:kyunghee_market/widgets/bottom_navigation.dart";
 
+import "../controller/bottom_controller.dart";
 import "../model/post.dart";
 import "detail_view.dart";
 import "main_view.dart";
@@ -107,7 +111,7 @@ class _CategoryListViewState extends State<CategoryListView> {
   List<Post> getPostsByCategory() {
     return posts.where((post) => post.category == widget.category).toList();
   }
-
+  final BottomController _bottomController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -136,6 +140,7 @@ class _CategoryListViewState extends State<CategoryListView> {
       ),
       drawer: AppDrawer(),
       body: buildBody(),
+      bottomNavigationBar: MyBottomNavigationBar(),
     );
   }
 
