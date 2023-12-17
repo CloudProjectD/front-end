@@ -1,7 +1,12 @@
 import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../controller/post_controller.dart';
+import '../model/post.dart';
 
 class WritingView extends StatefulWidget {
   const WritingView({super.key});
@@ -420,9 +425,21 @@ class _WritingViewState extends State<WritingView> {
    */
 
   void _onSubmit() {
-    /**
-     * TODO
-     */
+    Post newPost = Post(
+      title: _titleFieldController.text,
+      content: _contentFieldController.text,
+      category: transactionType,
+      price: transactionType == '거래' ? int.parse(_priceFieldController.text) : null,
+      creator: '컴공미남',
+      image: [],
+    );
+
+    for (XFile? img in showImgs) {
+      newPost.image.add(img?.path ?? '');
+    }
+
+    PostController postController = Get.find<PostController>();
+    postController.addPost(newPost);
 
     Navigator.pushNamed(context, '/app');
   }

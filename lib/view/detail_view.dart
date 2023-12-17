@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -23,6 +25,9 @@ class _DetailViewState extends State<DetailView> {
   //   "./assets/iphone.png",
   //   "./assets/iphone_detail.png",
   // ];
+  bool isAssetImage(String imagePath){
+    return imagePath.startsWith('./assets');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,10 +46,9 @@ class _DetailViewState extends State<DetailView> {
                   child: PageView.builder(
                     itemCount: widget.post.image.length,
                     itemBuilder: (context, index) {
-                      return Image.asset(
-                        widget.post.image[index],
-                        fit: BoxFit.cover,
-                      );
+                      return isAssetImage(widget.post.image.first)?
+                      Image.asset(widget.post.image[index], fit: BoxFit.cover,)
+                          : Image.file(File(widget.post.image[index]));
                     },
                   ),
                 ),

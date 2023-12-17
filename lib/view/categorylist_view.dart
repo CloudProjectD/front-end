@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:get/get.dart";
 import "package:get/get_core/src/get_main.dart";
+import "package:kyunghee_market/controller/post_controller.dart";
 import "package:kyunghee_market/view/messages_view.dart";
 import "package:kyunghee_market/view/profile_view.dart";
 import "package:kyunghee_market/view/writing_view.dart";
@@ -10,11 +11,11 @@ import "../controller/bottom_controller.dart";
 import "../model/post.dart";
 import "detail_view.dart";
 import "main_view.dart";
+import 'dart:io';
 
-//나중에 리팩토링 할 때 그냥 main view로 한꺼번에 합쳐야할 듯 -> main view(default : all, drawer 카테고리 클릭할 때 마다
-// api call을 다르게 보내서 받아오든가 해야제
-//중복되는 코드 너무 많음
-//navigation bar 같이 중복되는 위젯은 빼야할 것 같다
+bool isAssetImage(String imagePath){
+  return imagePath.startsWith('./assets');
+}
 
 class CategoryListView extends StatefulWidget {
   //변경될 수 있는 state를 가지고 있는 위젯
@@ -27,95 +28,103 @@ class CategoryListView extends StatefulWidget {
 }
 
 class _CategoryListViewState extends State<CategoryListView> {
+  final PostController postController = Get.find<PostController>();
   //더미데이터
-  List<Post> posts = [
-    Post(
-        title: "아이폰 팝니다^^",
-        content: "싸게팔아요",
-        price: 1555000,
-        category: '거래',
-        image: ["./assets/iphone.png"],
-        creator: "컴공미남"),
-    Post(
-        title: "아이폰 공짜로 가져가세요",
-        content: "꽁으로 가져가라",
-        category: '나눔',
-        image: ["./assets/iphone.png"],
-        creator: "컴공미남"),
-    Post(
-        title: "아이폰 팝니다^^",
-        content: "경매",
-        price: 1555000,
-        category: '경매',
-        image: ["./assets/iphone.png"],
-        creator: "컴공미남"),
-    Post(
-        title: "아이폰집 팝니다^^",
-        content: "싸게팔아요",
-        price: 50,
-        deposit: 1000,
-        category: '원룸',
-        image: ["./assets/iphone.png"],
-        creator: "컴공미남"),
-    Post(
-        title: "아이폰 팝니다^^",
-        content: "싸게팔아요",
-        price: 1555000,
-        category: '거래',
-        image: ["./assets/iphone.png"],
-        creator: "컴공미남"),
-    Post(
-        title: "아이폰 팝니다^^",
-        content: "싸게팔아요",
-        price: 1555000,
-        category: '거래',
-        image: ["./assets/iphone.png"],
-        creator: "컴공미남"),
-    Post(
-        title: "아이폰 팝니다^^",
-        content: "싸게팔아요",
-        price: 1555000,
-        category: '거래',
-        image: ["./assets/iphone.png"],
-        creator: "컴공미남"),
-    Post(
-        title: "아이폰 팝니다^^",
-        content: "싸게팔아요",
-        price: 1555000,
-        category: '거래',
-        image: ["./assets/iphone.png"],
-        creator: "컴공미남"),
-    Post(
-        title: "아이폰 팝니다^^",
-        content: "싸게팔아요",
-        price: 1555000,
-        category: '거래',
-        image: ["./assets/iphone.png"],
-        creator: "컴공미남"),
-    Post(
-        title: "아이폰 팝니다^^",
-        content: "싸게팔아요",
-        price: 1555000,
-        category: '거래',
-        image: ["./assets/iphone.png"],
-        creator: "컴공미남"),
-    Post(
-        title: "아이폰 팝니다^^",
-        content: "싸게팔아요",
-        price: 1555000,
-        category: '거래',
-        image: ["./assets/iphone.png"],
-        creator: "컴공미남"),
-  ];
+  // List<Post> posts = [
+  //   Post(
+  //       title: "아이폰 팝니다^^",
+  //       content: "싸게팔아요",
+  //       price: 1555000,
+  //       category: '거래',
+  //       image: ["./assets/iphone.png"],
+  //       creator: "알로하오예"),
+  //   Post(
+  //       title: "아이폰 공짜로 가져가세요",
+  //       content: "꽁으로 가져가라",
+  //       category: '나눔',
+  //       image: ["./assets/iphone.png"],
+  //       creator: "컴공미남"),
+  //   Post(
+  //       title: "아이폰 팝니다^^",
+  //       content: "경매",
+  //       price: 1555000,
+  //       category: '경매',
+  //       image: ["./assets/iphone.png"],
+  //       creator: "컴공미남"),
+  //   Post(
+  //       title: "아이폰집 팝니다^^",
+  //       content: "싸게팔아요",
+  //       price: 50,
+  //       deposit: 1000,
+  //       category: '원룸',
+  //       image: ["./assets/iphone.png"],
+  //       creator: "컴공미남"),
+  //   Post(
+  //       title: "아이폰 팝니다^^",
+  //       content: "싸게팔아요",
+  //       price: 1555000,
+  //       category: '거래',
+  //       image: ["./assets/iphone.png"],
+  //       creator: "컴공미남"),
+  //   Post(
+  //       title: "아이폰 팝니다^^",
+  //       content: "싸게팔아요",
+  //       price: 1555000,
+  //       category: '거래',
+  //       image: ["./assets/iphone.png"],
+  //       creator: "컴공미남"),
+  //   Post(
+  //       title: "아이폰 팝니다^^",
+  //       content: "싸게팔아요",
+  //       price: 1555000,
+  //       category: '거래',
+  //       image: ["./assets/iphone.png"],
+  //       creator: "컴공미남"),
+  //   Post(
+  //       title: "아이폰 팝니다^^",
+  //       content: "싸게팔아요",
+  //       price: 1555000,
+  //       category: '거래',
+  //       image: ["./assets/iphone.png"],
+  //       creator: "컴공미남"),
+  //   Post(
+  //       title: "아이폰 팝니다^^",
+  //       content: "싸게팔아요",
+  //       price: 1555000,
+  //       category: '거래',
+  //       image: ["./assets/iphone.png"],
+  //       creator: "컴공미남"),
+  //   Post(
+  //       title: "아이폰 팝니다^^",
+  //       content: "싸게팔아요",
+  //       price: 1555000,
+  //       category: '거래',
+  //       image: ["./assets/iphone.png"],
+  //       creator: "컴공미남"),
+  //   Post(
+  //       title: "아이폰 팝니다^^",
+  //       content: "싸게팔아요",
+  //       price: 1555000,
+  //       category: '거래',
+  //       image: ["./assets/iphone.png"],
+  //       creator: "컴공미남"),
+  // ];
 
   List<Post> getPostsByCategory() {
-    return posts.where((post) => post.category == widget.category).toList();
+    return postController.posts.where((post) => post.category == widget.category).toList();
   }
-  final BottomController _bottomController = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          color: Colors.black,
+        ),
         title: Text(
           widget.category,
           style: TextStyle(
@@ -138,9 +147,7 @@ class _CategoryListViewState extends State<CategoryListView> {
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Colors.grey),
       ),
-      drawer: AppDrawer(),
       body: buildBody(),
-      bottomNavigationBar: MyBottomNavigationBar(),
     );
   }
 
@@ -156,78 +163,8 @@ class _CategoryListViewState extends State<CategoryListView> {
       case '경매':
         return AuctionList(posts: filteredPosts);
       default:
-        return PostList(posts: posts);
+        return PostList(posts: postController.posts);
     }
-  }
-}
-
-class AppDrawer extends StatelessWidget {
-  const AppDrawer({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          DrawerHeader(
-            child:
-                Image.asset('./assets/healthicons_market-stall-negative.png'),
-            decoration: BoxDecoration(
-              color: Colors.white,
-            ),
-          ),
-          ListTile(
-            leading: Icon(Icons.handshake),
-            title: Text('거래'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CategoryListView(category: '거래'),
-                  ));
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.money),
-            title: Text('경매'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CategoryListView(category: '경매'),
-                  ));
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.groups),
-            title: Text('나눔'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CategoryListView(category: '나눔'),
-                  ));
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.house),
-            title: Text('원룸'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CategoryListView(category: '원룸'),
-                  ));
-            },
-          ),
-        ],
-      ),
-    );
   }
 }
 
@@ -291,7 +228,9 @@ class _TradeListState extends State<TradeList> {
         return Card(
           margin: const EdgeInsets.all(8.0),
           child: ListTile(
-            leading: Image.asset(widget.posts[index].image.first), // 물품 사진
+            leading: isAssetImage(widget.posts[index].image.first)?
+            Image.asset(widget.posts[index].image.first)
+                : Image.file(File(widget.posts[index].image.first)), // 물품 사진
             title: Text(widget.posts[index].title), // 게시글 제목 - 이건 동일
             subtitle: Text('${widget.posts[index].price}원'), // 가격,
             onTap: () {
@@ -330,7 +269,9 @@ class _AuctionListState extends State<AuctionList> {
         return Card(
           margin: const EdgeInsets.all(8.0),
           child: ListTile(
-            leading: Image.asset(widget.posts[index].image.first), // 물품 사진
+            leading:  isAssetImage(widget.posts[index].image.first)?
+            Image.asset(widget.posts[index].image.first)
+                : Image.file(File(widget.posts[index].image.first)),// 물품 사진
             title: Text(widget.posts[index].title), // 게시글 제목 - 이건 동일
             subtitle: Text('${widget.posts[index].price}원부터~'), // 가격,
             onTap: () {
@@ -369,7 +310,9 @@ class _ShareListState extends State<ShareList> {
         return Card(
           margin: const EdgeInsets.all(8.0),
           child: ListTile(
-            leading: Image.asset(widget.posts[index].image.first), // 물품 사진
+            leading:  isAssetImage(widget.posts[index].image.first)?
+            Image.asset(widget.posts[index].image.first)
+                : Image.file(File(widget.posts[index].image.first)), // 물품 사진
             title: Text(widget.posts[index].title), // 게시글 제목 - 이건 동일
             subtitle: Text('무료'), // 가격,
             onTap: () {
@@ -408,7 +351,9 @@ class _OneRoomListState extends State<OneRoomList> {
         return Card(
           margin: const EdgeInsets.all(8.0),
           child: ListTile(
-            leading: Image.asset(widget.posts[index].image.first),
+            leading:  isAssetImage(widget.posts[index].image.first)?
+            Image.asset(widget.posts[index].image.first)
+                : Image.file(File(widget.posts[index].image.first)),
             // 물품 사진
             title: Text(widget.posts[index].title),
             // 게시글 제목 - 이건 동일
