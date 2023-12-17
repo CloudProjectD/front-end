@@ -13,7 +13,9 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
-
+  bool isAssetImage(String imagePath){
+    return imagePath.startsWith('./assets');
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -123,7 +125,9 @@ class _ProfileViewState extends State<ProfileView> {
                       color: Colors.black12,
                       height: 70.0,
                       width: 70.0,
-                      child: Icon(Icons.add_sharp)),
+                      child: IconButton(onPressed:(){
+                        Navigator.pushNamed(context, '/writing');
+                      } , icon: Icon(Icons.add_sharp))),
                 )
               ],
             ),

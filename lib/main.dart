@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kyunghee_market/home.dart';
+import 'package:kyunghee_market/view/detail_view.dart';
 import 'package:kyunghee_market/view/login_view.dart';
 import 'package:kyunghee_market/view/authentication_view.dart';
 import 'package:kyunghee_market/view/main_view.dart';
@@ -8,6 +9,7 @@ import 'package:kyunghee_market/view/messages_view.dart';
 import 'package:kyunghee_market/view/nickname_view.dart';
 import 'package:kyunghee_market/view/profile_view.dart';
 import 'package:kyunghee_market/view/report_view.dart';
+import 'package:kyunghee_market/view/writing_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,11 +34,12 @@ class _MyAppState extends State<MyApp> {
         // '/authentication': (context) => AuthenticationView(),
         // '/nickname': (context) => NicknameView(),
         '/profile': (context) => ProfileView(),
-        // '/app': (context) => HomePage(),
+        '/app': (context) => HomePage(),
         '/main': (context) => MainView(),
         '/messages': (context) => MessagesView(),
         '/messageroom': (context) => MessageRoomView(),
-        '/report': (context) => ReportView()
+        '/report': (context) => ReportView(),
+        '/writing': (context) => WritingView()
       },
     );
   }
