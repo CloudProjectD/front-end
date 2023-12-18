@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kyunghee_market/controller/post_controller.dart';
 import 'package:kyunghee_market/view/messageroom_view.dart';
 import 'package:kyunghee_market/view/writing_view.dart';
 
@@ -271,9 +273,7 @@ class _DetailViewState extends State<DetailView> {
             ),
             TextButton(
               onPressed: () {
-                // TODO: 삭제요청 api
-                // Delete the post and navigate back or perform any other necessary actions
-                Navigator.pop(context); // Close the confirmation dialog
+                _deletePost(); // Close the confirmation dialog
               },
               child: Text(
                 '삭제',
@@ -286,6 +286,11 @@ class _DetailViewState extends State<DetailView> {
         );
       },
     );
+  }
+
+  void _deletePost(){
+    Get.find<PostController>().deletePost(widget.post);
+    Navigator.pushNamed(context, '/app');
   }
 
   Widget _buildPriceInfo(Post post) {

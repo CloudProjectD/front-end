@@ -85,4 +85,17 @@ class PostController extends GetxController{
   void addPost(Post post){
     posts.add(post);
   }
+
+  void deletePost(Post post){
+    posts.remove(post);
+    update();
+  }
+
+  void modifyPost(Post post){
+    int index = posts.indexWhere((element) => element.title == post.title);
+    if (index != -1) {
+      posts[index] = post;
+    }
+    update();
+  }
 }
