@@ -19,90 +19,12 @@ class MainView extends StatefulWidget {
 }
 
 class _MainViewState extends State<MainView> {
-  // This widget is the root of your application.
-  // List<Post> posts = [
-  //   Post(
-  //       title: "아이폰 팝니다^^",
-  //       content: "싸게팔아요",
-  //       price: 1555000,
-  //       category: '거래',
-  //       image: ["./assets/iphone.png"],
-  //       creator: "컴공미남"),
-  //   Post(
-  //       title: "아이폰 공짜로 가져가세요",
-  //       content: "꽁으로 가져가라",
-  //       category: '나눔',
-  //       image: ["./assets/iphone.png"],
-  //       creator: "컴공미남"),
-  //   Post(
-  //       title: "아이폰 경매요^^",
-  //       content: "경매",
-  //       price: 1555000,
-  //       category: '경매',
-  //       image: ["./assets/iphone.png"],
-  //       creator: "컴공미남"),
-  //   Post(
-  //       title: "아이폰집 팝니다^^",
-  //       content: "싸게팔아요",
-  //       price: 50,
-  //       deposit: 1000,
-  //       category: '원룸',
-  //       image: ["./assets/iphone.png"],
-  //       creator: "컴공미남"),
-  //   Post(
-  //       title: "아이폰 팝니다^^",
-  //       content: "싸게팔아요",
-  //       price: 1555000,
-  //       category: '거래',
-  //       image: ["./assets/iphone.png"],
-  //       creator: "컴공미남"),
-  //   Post(
-  //       title: "아이폰 팝니다^^",
-  //       content: "싸게팔아요",
-  //       price: 1555000,
-  //       category: '거래',
-  //       image: ["./assets/iphone.png"],
-  //       creator: "컴공미남"),
-  //   Post(
-  //       title: "아이폰 팝니다^^",
-  //       content: "싸게팔아요",
-  //       price: 1555000,
-  //       category: '거래',
-  //       image: ["./assets/iphone.png"],
-  //       creator: "컴공미남"),
-  //   Post(
-  //       title: "아이폰 팝니다^^",
-  //       content: "싸게팔아요",
-  //       price: 1555000,
-  //       category: '거래',
-  //       image: ["./assets/iphone.png"],
-  //       creator: "컴공미남"),
-  //   Post(
-  //       title: "아이폰 팝니다^^",
-  //       content: "싸게팔아요",
-  //       price: 1555000,
-  //       category: '거래',
-  //       image: ["./assets/iphone.png"],
-  //       creator: "컴공미남"),
-  //   Post(
-  //       title: "아이폰 팝니다^^",
-  //       content: "싸게팔아요",
-  //       price: 1555000,
-  //       category: '거래',
-  //       image: ["./assets/iphone.png"],
-  //       creator: "컴공미남"),
-  //   Post(
-  //       title: "아이폰 팝니다^^",
-  //       content: "싸게팔아요",
-  //       price: 1555000,
-  //       category: '거래',
-  //       image: ["./assets/iphone.png"],
-  //       creator: "컴공미남"),
-  // ];
   final PostController postController = Get.put(PostController());
-  bool isAssetImage(String imagePath){
+
+  bool isAssetImage(String imagePath) {
     return imagePath.startsWith('./assets');
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -132,24 +54,59 @@ class _MainViewState extends State<MainView> {
       drawer: AppDrawer(),
       body: Obx(
         () => ListView.builder(
+          // reverse: true,
           itemCount: postController.posts.length, // 게시글 수
           itemBuilder: (context, index) {
             return Card(
               margin: const EdgeInsets.all(8.0),
-              child: ListTile(
-                leading: isAssetImage(postController.posts[index].image.first)?
-                    Image.asset(postController.posts[index].image.first)
-                : Image.file(File(postController.posts[index].image.first)),
-                title: Text(postController.posts[index].title), // 게시글 제목
-                subtitle: buildPrice(postController.posts[index]), // 가격
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DetailView(post: postController.posts[index]),
+              child: Container(
+                child: ListTile(
+                  contentPadding: EdgeInsets.all(17),
+                  leading: Container(
+                    height: 100,
+                    width: 70,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
                     ),
-                  );
-                },
+                    child: isAssetImage(postController
+                            .posts[postController.posts.length - 1 - index]
+                            .image
+                            .first)
+                        ? Image.asset(
+                            postController
+                                .posts[postController.posts.length - 1 - index]
+                                .image
+                                .first,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.file(
+                            File(postController
+                                .posts[postController.posts.length - 1 - index]
+                                .image
+                                .first),
+                            fit: BoxFit.cover,
+                          ),
+                  ),
+                  title: Text(
+                    postController
+                        .posts[postController.posts.length - 1 - index].title,
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  // 게시글 제목
+                  subtitle: buildPrice(postController
+                      .posts[postController.posts.length - 1 - index]),
+                  // 가격
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DetailView(
+                            post: postController.posts[
+                                postController.posts.length - 1 - index]),
+                      ),
+                    );
+                  },
+                ),
               ),
             );
           },
@@ -161,6 +118,10 @@ class _MainViewState extends State<MainView> {
   Widget buildPrice(Post post) {
     if (post.category == '나눔') {
       return Text('무료');
+    } else if (post.category == '원룸') {
+      return Text('보증금 ${post.deposit} / ${post.price}');
+    } else if (post.category == '경매') {
+      return Text('${post.price}원부터~');
     } else {
       return Text('${post.price}원');
     }
@@ -177,59 +138,83 @@ class AppDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: [
           DrawerHeader(
-            child:
-                Image.asset('./assets/healthicons_market-stall-negative.png'),
+            child: Image.asset('./assets/kyunhee_market_logo.jpg'),
             decoration: BoxDecoration(
               color: Colors.white,
+              shape: BoxShape.circle,
             ),
           ),
-          ListTile(
-            leading: Icon(Icons.handshake),
-            title: Text('거래'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CategoryListView(category: '거래'),
-                  ));
-            },
+          Container(
+            height: 50,
+            child: ListTile(
+              leading: Icon(Icons.handshake),
+              title: Text(
+                '거래',
+                style: TextStyle(fontSize: 18),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CategoryListView(category: '거래'),
+                    ));
+              },
+            ),
           ),
-          ListTile(
-            leading: Icon(Icons.money),
-            title: Text('경매'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CategoryListView(category: '경매'),
-                  ));
-            },
+          Container(
+            height: 50,
+            child: ListTile(
+              leading: Image.asset('./assets/auction.png',
+                  height: 25, width: 25, color: Colors.black54),
+              title: Text(
+                '경매',
+                style: TextStyle(fontSize: 18),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CategoryListView(category: '경매'),
+                    ));
+              },
+            ),
           ),
-          ListTile(
-            leading: Icon(Icons.groups),
-            title: Text('나눔'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CategoryListView(category: '나눔'),
-                  ));
-            },
+          Container(
+            height: 50,
+            child: ListTile(
+              leading: Icon(Icons.groups),
+              title: Text(
+                '나눔',
+                style: TextStyle(fontSize: 18),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CategoryListView(category: '나눔'),
+                    ));
+              },
+            ),
           ),
-          ListTile(
-            leading: Icon(Icons.house),
-            title: Text('원룸'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CategoryListView(category: '원룸'),
-                  ));
-            },
+          Container(
+            height: 50,
+            child: ListTile(
+              leading: Icon(Icons.house),
+              title: Text('원룸', style: TextStyle(
+                fontSize: 18
+              ),),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CategoryListView(category: '원룸'),
+                    ));
+              },
+            ),
           ),
         ],
       ),
