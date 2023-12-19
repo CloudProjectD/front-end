@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:kyunghee_market/controller/message_controller.dart';
-import 'package:kyunghee_market/view/message/message_bubble.dart';
 import 'package:get/get.dart';
 
-import '../../controller/message_controller333.dart';
+import 'message_bubble.dart';
 
-class Messages333 extends StatefulWidget {
-  const Messages333({super.key});
+class Messages extends StatefulWidget {
+  const Messages({super.key});
 
   @override
-  State<Messages333> createState() => _Messages333State();
+  State<Messages> createState() => _MessagesState();
 }
 
-class _Messages333State extends State<Messages333> {
-  MessageController333 messageController = Get.put(MessageController333());
+class _MessagesState extends State<Messages> {
+  MessageController messageController = Get.put(MessageController());
   late int _currentFlow;
 
   @override
   void initState() {
     // TODO: implement initState
-    _currentFlow = MessageController333().currentFlow;
+    _currentFlow = MessageController().currentFlow;
     super.initState();
     messageController.addListener(_onMessageControllerChange);
   }
@@ -46,16 +45,20 @@ class _Messages333State extends State<Messages333> {
             if (messageController.currentFlow == 0) {
               return Column(
                 children: [
-                  MessageBubble('안녕하세요, 거래 가능할까요?', false),
-                  MessageBubble('미개봉 상품인가요?', false),
                 ],
               );
             } else if (messageController.currentFlow == 1) {
-              return Column(
+              return Column (
                 children: [
-                  MessageBubble('안녕하세요, 거래 가능할까요?', false),
-                  MessageBubble('미개봉 상품인가요?', false),
-                  MessageBubble('네!!', true),
+                  MessageBubble(
+                      '안녕하세요, 거래 가능할까요?', true)
+                ],
+              );
+            } else if (messageController.currentFlow == 2) {
+              return Column (
+                children: [
+                  MessageBubble('안녕하세요, 거래 가능할까요?', true),
+                  MessageBubble('미개봉 상품인가요?', true),
                 ],
               );
             }

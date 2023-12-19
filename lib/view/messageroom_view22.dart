@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:kyunghee_market/view/message/article.dart';
-import 'package:kyunghee_market/view/message/message.dart';
-import 'package:kyunghee_market/view/message/new_message.dart';
 
-import 'message/article22.dart';
-import 'message/message22.dart';
+import '../message/article22.dart';
+import '../message/message22.dart';
+import '../message/new_message.dart';
+
 
 class MessageRoomView22 extends StatefulWidget {
   const MessageRoomView22({super.key});

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kyunghee_market/view/message/article.dart';
-import 'package:kyunghee_market/view/message/message.dart';
-import 'package:kyunghee_market/view/message/new_message.dart';
-
-import 'message/message333.dart';
+import '../message/article.dart';
+import '../message/message333.dart';
+import '../message/new_message.dart';
 
 class MessageRoomView333 extends StatefulWidget {
   const MessageRoomView333({super.key});

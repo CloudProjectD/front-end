@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kyunghee_market/controller/message_controller.dart';
-import 'package:kyunghee_market/view/message/message_bubble.dart';
 import 'package:get/get.dart';
+
+import 'message_bubble.dart';
 
 class Messages22 extends StatefulWidget {
   const Messages22({super.key});
