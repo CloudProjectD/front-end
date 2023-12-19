@@ -41,7 +41,6 @@ class _MyAppState extends State<MyApp> {
         '/messageroom': (context) => MessageRoomView(),
         '/report': (context) => ReportView(),
         '/writing': (context) => WritingView(),
-        '/edit': (context) => EditView()
       },
     );
   }

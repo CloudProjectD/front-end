@@ -28,10 +28,10 @@ class _ProfileViewState extends State<ProfileView> {
               child : Row(
                 children: [
                   CircleAvatar(
-                    backgroundColor: Colors.black12,
+                    backgroundColor: Colors.grey,
                     radius: 30.0,
-                    backgroundImage: NetworkImage(
-                        'https://i.namu.wiki/i/phJJ4yav60AY8ao5brb4JDnoqP0ZFJk3zaqLnE9l760V5ubk2b67VUnQzz73oeVaJRm49I_Fr32QqU36RyddNw.webp'),
+                    backgroundImage: AssetImage(
+                        'assets/user.png'),
                   ),
                   Container(
                       margin: EdgeInsets.only(left: 20),

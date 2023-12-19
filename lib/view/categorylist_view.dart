@@ -29,86 +29,6 @@ class CategoryListView extends StatefulWidget {
 
 class _CategoryListViewState extends State<CategoryListView> {
   final PostController postController = Get.find<PostController>();
-  //더미데이터
-  // List<Post> posts = [
-  //   Post(
-  //       title: "아이폰 팝니다^^",
-  //       content: "싸게팔아요",
-  //       price: 1555000,
-  //       category: '거래',
-  //       image: ["./assets/iphone.png"],
-  //       creator: "알로하오예"),
-  //   Post(
-  //       title: "아이폰 공짜로 가져가세요",
-  //       content: "꽁으로 가져가라",
-  //       category: '나눔',
-  //       image: ["./assets/iphone.png"],
-  //       creator: "컴공미남"),
-  //   Post(
-  //       title: "아이폰 팝니다^^",
-  //       content: "경매",
-  //       price: 1555000,
-  //       category: '경매',
-  //       image: ["./assets/iphone.png"],
-  //       creator: "컴공미남"),
-  //   Post(
-  //       title: "아이폰집 팝니다^^",
-  //       content: "싸게팔아요",
-  //       price: 50,
-  //       deposit: 1000,
-  //       category: '원룸',
-  //       image: ["./assets/iphone.png"],
-  //       creator: "컴공미남"),
-  //   Post(
-  //       title: "아이폰 팝니다^^",
-  //       content: "싸게팔아요",
-  //       price: 1555000,
-  //       category: '거래',
-  //       image: ["./assets/iphone.png"],
-  //       creator: "컴공미남"),
-  //   Post(
-  //       title: "아이폰 팝니다^^",
-  //       content: "싸게팔아요",
-  //       price: 1555000,
-  //       category: '거래',
-  //       image: ["./assets/iphone.png"],
-  //       creator: "컴공미남"),
-  //   Post(
-  //       title: "아이폰 팝니다^^",
-  //       content: "싸게팔아요",
-  //       price: 1555000,
-  //       category: '거래',
-  //       image: ["./assets/iphone.png"],
-  //       creator: "컴공미남"),
-  //   Post(
-  //       title: "아이폰 팝니다^^",
-  //       content: "싸게팔아요",
-  //       price: 1555000,
-  //       category: '거래',
-  //       image: ["./assets/iphone.png"],
-  //       creator: "컴공미남"),
-  //   Post(
-  //       title: "아이폰 팝니다^^",
-  //       content: "싸게팔아요",
-  //       price: 1555000,
-  //       category: '거래',
-  //       image: ["./assets/iphone.png"],
-  //       creator: "컴공미남"),
-  //   Post(
-  //       title: "아이폰 팝니다^^",
-  //       content: "싸게팔아요",
-  //       price: 1555000,
-  //       category: '거래',
-  //       image: ["./assets/iphone.png"],
-  //       creator: "컴공미남"),
-  //   Post(
-  //       title: "아이폰 팝니다^^",
-  //       content: "싸게팔아요",
-  //       price: 1555000,
-  //       category: '거래',
-  //       image: ["./assets/iphone.png"],
-  //       creator: "컴공미남"),
-  // ];
 
   List<Post> getPostsByCategory() {
     return postController.posts.where((post) => post.category == widget.category).toList();
@@ -223,24 +143,43 @@ class _TradeListState extends State<TradeList> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      // reverse: true,
       itemCount: widget.posts.length, // 게시글 수
       itemBuilder: (context, index) {
         return Card(
           margin: const EdgeInsets.all(8.0),
-          child: ListTile(
-            leading: isAssetImage(widget.posts[index].image.first)?
-            Image.asset(widget.posts[index].image.first)
-                : Image.file(File(widget.posts[index].image.first)), // 물품 사진
-            title: Text(widget.posts[index].title), // 게시글 제목 - 이건 동일
-            subtitle: Text('${widget.posts[index].price}원'), // 가격,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DetailView(post: widget.posts[index]),
+          child: Container(
+            child: ListTile(
+              contentPadding: EdgeInsets.all(17),
+              leading: Container(
+                height: 100,
+                width: 70,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
                 ),
-              );
-            },
+                child: isAssetImage(widget.posts[widget.posts.length - 1 - index].image.first)
+                    ? Image.asset(
+                  widget.posts[widget.posts.length - 1 - index].image.first,
+                  fit: BoxFit.cover,
+                )
+                    : Image.file(
+                  File(widget.posts[widget.posts.length - 1 - index].image.first),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              title: Text(widget.posts[widget.posts.length - 1 - index].title, style: TextStyle(
+                  fontSize: 18
+              ),), // 게시글 제목
+              subtitle: Text('${widget.posts[widget.posts.length - 1 - index].price}원'), // 가격
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DetailView(post: widget.posts[widget.posts.length - 1 - index]),
+                  ),
+                );
+              },
+            ),
           ),
         );
       },
@@ -268,20 +207,38 @@ class _AuctionListState extends State<AuctionList> {
       itemBuilder: (context, index) {
         return Card(
           margin: const EdgeInsets.all(8.0),
-          child: ListTile(
-            leading:  isAssetImage(widget.posts[index].image.first)?
-            Image.asset(widget.posts[index].image.first)
-                : Image.file(File(widget.posts[index].image.first)),// 물품 사진
-            title: Text(widget.posts[index].title), // 게시글 제목 - 이건 동일
-            subtitle: Text('${widget.posts[index].price}원부터~'), // 가격,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DetailView(post: widget.posts[index]),
+          child: Container(
+            child: ListTile(
+              contentPadding: EdgeInsets.all(13),
+              leading: Container(
+                height: 100,
+                width: 70,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
                 ),
-              );
-            },
+                child: isAssetImage(widget.posts[widget.posts.length - 1 - index].image.first)
+                    ? Image.asset(
+                  widget.posts[widget.posts.length - 1 - index].image.first,
+                  fit: BoxFit.cover,
+                )
+                    : Image.file(
+                  File(widget.posts[widget.posts.length - 1 - index].image.first),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              title: Text(widget.posts[widget.posts.length - 1 - index].title, style: TextStyle(
+                  fontSize: 18
+              ),), // 게시글 제목
+              subtitle: Text('${widget.posts[widget.posts.length - 1 - index].price}원부터~'), // 가격
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DetailView(post: widget.posts[widget.posts.length - 1 - index]),
+                  ),
+                );
+              },
+            ),
           ),
         );
       },
@@ -309,20 +266,38 @@ class _ShareListState extends State<ShareList> {
       itemBuilder: (context, index) {
         return Card(
           margin: const EdgeInsets.all(8.0),
-          child: ListTile(
-            leading:  isAssetImage(widget.posts[index].image.first)?
-            Image.asset(widget.posts[index].image.first)
-                : Image.file(File(widget.posts[index].image.first)), // 물품 사진
-            title: Text(widget.posts[index].title), // 게시글 제목 - 이건 동일
-            subtitle: Text('무료'), // 가격,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DetailView(post: widget.posts[index]),
+          child: Container(
+            child: ListTile(
+              contentPadding: EdgeInsets.all(13),
+              leading: Container(
+                height: 100,
+                width: 70,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
                 ),
-              );
-            },
+                child: isAssetImage(widget.posts[widget.posts.length - 1 - index].image.first)
+                    ? Image.asset(
+                  widget.posts[widget.posts.length - 1 - index].image.first,
+                  fit: BoxFit.cover,
+                )
+                    : Image.file(
+                  File(widget.posts[widget.posts.length - 1 - index].image.first),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              title: Text(widget.posts[widget.posts.length - 1 - index].title, style: TextStyle(
+                  fontSize: 18
+              ),), // 게시글 제목
+              subtitle: Text('무료'), // 가격
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DetailView(post: widget.posts[widget.posts.length - 1 - index]),
+                  ),
+                );
+              },
+            ),
           ),
         );
       },
@@ -350,27 +325,43 @@ class _OneRoomListState extends State<OneRoomList> {
       itemBuilder: (context, index) {
         return Card(
           margin: const EdgeInsets.all(8.0),
-          child: ListTile(
-            leading:  isAssetImage(widget.posts[index].image.first)?
-            Image.asset(widget.posts[index].image.first)
-                : Image.file(File(widget.posts[index].image.first)),
-            // 물품 사진
-            title: Text(widget.posts[index].title),
-            // 게시글 제목 - 이건 동일
-            subtitle: Text(
-                '${widget.posts[index].price}/${widget.posts[index].deposit}'),
-            // 가격,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DetailView(post: widget.posts[index]),
+          child: Container(
+            child: ListTile(
+              contentPadding: EdgeInsets.all(13),
+              leading: Container(
+                height: 100,
+                width: 70,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
                 ),
-              );
-            },
+                child: isAssetImage(widget.posts[widget.posts.length - 1 - index].image.first)
+                    ? Image.asset(
+                  widget.posts[widget.posts.length - 1 - index].image.first,
+                  fit: BoxFit.cover,
+                )
+                    : Image.file(
+                  File(widget.posts[widget.posts.length - 1 - index].image.first),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              title: Text(widget.posts[widget.posts.length - 1 - index].title, style: TextStyle(
+                  fontSize: 18
+              ),), // 게시글 제목
+              subtitle: Text(
+                  '${widget.posts[widget.posts.length - 1 - index].price}/${widget.posts[widget.posts.length - 1 - index].deposit}'), // 가격
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DetailView(post: widget.posts[widget.posts.length - 1 - index]),
+                  ),
+                );
+              },
+            ),
           ),
         );
       },
     );
   }
 }
+

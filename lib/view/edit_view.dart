@@ -7,9 +7,11 @@ import 'package:image_picker/image_picker.dart';
 
 import '../controller/post_controller.dart';
 import '../model/post.dart';
+import 'detail_view.dart';
 
 class EditView extends StatefulWidget {
-  const EditView({super.key});
+  final Post post;
+  const EditView({Key? key, required this.post}) : super(key: key);
 
   @override
   State<EditView> createState() => _EditViewState();
@@ -50,6 +52,17 @@ class _EditViewState extends State<EditView> {
   TextEditingController _titleFieldController = TextEditingController();
   TextEditingController _contentFieldController = TextEditingController();
   TextEditingController _priceFieldController = TextEditingController();
+
+  @override
+  void initState(){
+    super.initState();
+    //기존 post 데이터를 가져와서 ui에 반영
+    _titleFieldController.text = widget.post.title;
+    _contentFieldController.text = widget.post.content;
+    _priceFieldController.text = widget.post.price.toString();
+    showImgs = widget.post.image.map((path) => XFile(path)).toList();
+    print("Initialized _pickedImgs: $_pickedImgs");
+  }
 
   bool isButtonEnabled() {
     return _titleFieldController.text.isNotEmpty &&
@@ -113,6 +126,9 @@ class _EditViewState extends State<EditView> {
                             )),
                       ),
                       // SizedBox(width: 10),
+                      // ..._pickedImgs.map((XFile? img){
+                      //   return img != null ? _buildImageWidget(img) : SizedBox.shrink();
+                      // }),
                       ...showImgs.map((img) {
                         return Container(
                           width: 80,
@@ -149,54 +165,6 @@ class _EditViewState extends State<EditView> {
                           ),
                         );
                       }),
-                      // Container(
-                      //   child: GridView.builder(
-                      //       padding: EdgeInsets.all(0),
-                      //       shrinkWrap: true,
-                      //       itemCount: showImgs.length,
-                      //       gridDelegate:
-                      //           SliverGridDelegateWithFixedCrossAxisCount(
-                      //             crossAxisCount: 5,
-                      //             childAspectRatio: 1.5,
-                      //             mainAxisSpacing: 10,
-                      //             crossAxisSpacing: 10,
-                      //       ),
-                      //       itemBuilder: (BuildContext context, int index) {
-                      //         return Stack(
-                      //           // alignment: Alignment.topRight,
-                      //           children: [
-                      //             Container(
-                      //               decoration: BoxDecoration(
-                      //                   borderRadius: BorderRadius.circular(5),
-                      //                   image: DecorationImage(
-                      //                       fit: BoxFit.cover,
-                      //                       //사진 크기를 Container 크기에 맞게 조절
-                      //                       image: FileImage(File(showImgs[index]!
-                      //                               .path // images 리스트 변수 안에 있는 사진들을 순서대로 표시함
-                      //                           )))),
-                      //             ),
-                      //             Container(
-                      //                 decoration: BoxDecoration(
-                      //                   color: Colors.black,
-                      //                   borderRadius: BorderRadius.circular(5),
-                      //                 ),
-                      //                 //삭제 버튼
-                      //                 child: IconButton(
-                      //                   padding: EdgeInsets.zero,
-                      //                   constraints: BoxConstraints(),
-                      //                   icon: Icon(Icons.close,
-                      //                       color: Colors.white, size: 15),
-                      //                   onPressed: () {
-                      //                     //버튼을 누르면 해당 이미지가 삭제됨
-                      //                     setState(() {
-                      //                       showImgs.remove(showImgs[index]);
-                      //                     });
-                      //                   },
-                      //                 ))
-                      //           ],
-                      //         );
-                      //       }),
-                      // )
                     ],
                   ),
                 ),
@@ -424,8 +392,47 @@ class _EditViewState extends State<EditView> {
   }
    */
 
+  // Widget _buildImageWidget(XFile img) {
+  //   return Container(
+  //     width: 80,
+  //     height: 80,
+  //     child: Stack(
+  //       children: [
+  //         // 기존 이미지 표시
+  //         Container(
+  //           decoration: BoxDecoration(
+  //             color: Colors.black,
+  //             borderRadius: BorderRadius.circular(5),
+  //             image: DecorationImage(
+  //               fit: BoxFit.cover,
+  //               image:  FileImage(File(img!.path)),
+  //             )
+  //           ),
+  //           child: IconButton(
+  //             padding: EdgeInsets.zero,
+  //             constraints: BoxConstraints(),
+  //             icon: Icon(Icons.close, color: Colors.white, size: 15),
+  //             onPressed: () {
+  //               setState(() {
+  //                 _pickedImgs.remove(img);
+  //               });
+  //             },
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
+
   void _onSubmit() {
-    Post newPost = Post(
+    PostController postController = Get.find<PostController>();
+    //기존 게시물 찾기
+    Post existingPost = postController.posts.firstWhere(
+          (post) => post.title == widget.post.title,
+      orElse: () => widget.post,
+    );
+
+    Post modifiedPost = Post(
       title: _titleFieldController.text,
       content: _contentFieldController.text,
       category: transactionType,
@@ -434,13 +441,17 @@ class _EditViewState extends State<EditView> {
       image: [],
     );
 
-    for (XFile? img in showImgs) {
-      newPost.image.add(img?.path ?? '');
-    }
+    List<String> updateImages= _pickedImgs.map((img) => img?.path ?? '').toList();
+    modifiedPost.image.addAll(updateImages);
 
-    PostController postController = Get.find<PostController>();
-    postController.addPost(newPost);
-
+    postController.deletePost(existingPost);
+    postController.addPost(modifiedPost);
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) => DetailView(post: modifiedPost),
+    //   ),
+    // );
     Navigator.pushNamed(context, '/app');
   }
 
@@ -451,4 +462,7 @@ class _EditViewState extends State<EditView> {
     _priceFieldController.dispose();
     super.dispose();
   }
+
 }
+
+

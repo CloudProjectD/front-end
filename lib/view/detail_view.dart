@@ -9,6 +9,7 @@ import 'package:kyunghee_market/view/messageroom_view.dart';
 import 'package:kyunghee_market/view/writing_view.dart';
 
 import '../model/post.dart';
+import 'edit_view.dart';
 
 class DetailView extends StatefulWidget {
   final Post post;
@@ -72,8 +73,8 @@ class _DetailViewState extends State<DetailView> {
                 children: [
                   CircleAvatar(
                     radius: 20,
-                    backgroundImage: NetworkImage(
-                        'https://i.namu.wiki/i/phJJ4yav60AY8ao5brb4JDnoqP0ZFJk3zaqLnE9l760V5ubk2b67VUnQzz73oeVaJRm49I_Fr32QqU36RyddNw.webp'),
+                    backgroundImage: getProfileImageByNickname(widget.post),
+                    backgroundColor: Colors.grey,
                   ),
                   SizedBox(width: 8),
                   Column(
@@ -82,7 +83,6 @@ class _DetailViewState extends State<DetailView> {
                       Text(
                         widget.post.creator,
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
                           fontSize: 17,
                         ),
                       ),
@@ -103,8 +103,15 @@ class _DetailViewState extends State<DetailView> {
                 ],
               ),
             ),
+            const Divider(
+              height: 1,
+              thickness: 0.2,
+              indent: 5,
+              endIndent: 5,
+              color: Colors.grey,
+            ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(14.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -124,7 +131,7 @@ class _DetailViewState extends State<DetailView> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => WritingView(),
+                                builder: (context) => EditView(post : widget.post),
                               ),
                             );
                           } else if (value == 'delete') {
@@ -152,9 +159,12 @@ class _DetailViewState extends State<DetailView> {
                     ],
                   ),
                   SizedBox(height: 8),
-                  Text(
-                    widget.post.content,
-                    style: TextStyle(fontSize: 16),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0, bottom: 16.0),
+                    child: Text(
+                      widget.post.content,
+                      style: TextStyle(fontSize: 16),
+                    ),
                   ),
                 ],
               ),
@@ -177,7 +187,14 @@ class _DetailViewState extends State<DetailView> {
                   isLiked ? Icons.favorite : Icons.favorite_border,
                   color: isLiked ? Colors.red : Colors.black,
                 )),
-            // SizedBox(width: 30),
+            VerticalDivider(
+              thickness: 0.2,
+              width: 0.05,
+              color: Colors.grey,
+              indent: 5,
+              endIndent: 5,
+            ),
+            SizedBox(width: 3),
             _buildPriceInfo(widget.post),
             _getWidgetForCategory(widget.post),
             Container(
@@ -246,6 +263,15 @@ class _DetailViewState extends State<DetailView> {
     );
   }
 
+  ImageProvider getProfileImageByNickname(Post post) {
+    if (post.creator == '알로하오예') {
+      return AssetImage('assets/profile1.png');
+    } else {
+      return AssetImage(
+          'assets/user.png');
+    }
+  }
+
   /**
    * 삭제 확인 창
    */
@@ -298,7 +324,7 @@ class _DetailViewState extends State<DetailView> {
       return Text('보증금 ${post.deposit}/${post.price}',
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold));
     } else if (post.category == '나눔') {
-      return Text('나눔',
+      return Text('무료',
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold));
     } else if (post.category == '경매') {
       return Text('${post.price}원부터',
@@ -311,11 +337,11 @@ class _DetailViewState extends State<DetailView> {
 
   Widget _getWidgetForCategory(Post post) {
     if (widget.post.category == '경매') {
-      return SizedBox(width: 10.0); // Set the width for the '경매' category
+      return SizedBox(width: 10.0);
     } else if (widget.post.category == '원룸') {
-      return SizedBox(width: 5.0); // Use Spacer for other categories
+      return SizedBox(width: 5.0);
     } else {
-      return Spacer();
+      return SizedBox(width: 45.0);
     }
   }
 

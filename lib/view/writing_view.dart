@@ -92,7 +92,7 @@ class _WritingViewState extends State<WritingView> {
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(5),
-                            border: Border.all(color: Colors.black),
+                            border: Border.all(color: Colors.black54),
                             boxShadow: [
                               BoxShadow(
                                   color: Colors.grey.withOpacity(0.5),
@@ -206,7 +206,8 @@ class _WritingViewState extends State<WritingView> {
               TextField(
                 controller: _titleFieldController,
                 decoration: InputDecoration(
-                  labelText: '제목',
+                  // labelText: '제목',
+                  hintText: '제목을 입력해주세요',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15.0),
                   ),
@@ -221,7 +222,7 @@ class _WritingViewState extends State<WritingView> {
                 controller: _contentFieldController,
                 maxLines: 5,
                 decoration: InputDecoration(
-                  labelText: '설명',
+                  hintText: '거래하고 싶은 물품에 대한 설명을 작성해 주세요',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15.0),
                   ),
@@ -306,7 +307,7 @@ class _WritingViewState extends State<WritingView> {
                   controller: _priceFieldController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                    labelText: '거래 가격',
+                    hintText: '거래 가격',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15.0),
                     ),
@@ -346,7 +347,7 @@ class _WritingViewState extends State<WritingView> {
                       controller: _priceFieldController,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
-                        labelText: '경매 시작가',
+                        hintText: '원하는 시작가격을 입력해주세요',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15.0),
                         ),
@@ -367,7 +368,7 @@ class _WritingViewState extends State<WritingView> {
                     TextField(
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
-                        labelText: '보증금',
+                        hintText: '보증금',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15.0),
                         ),
@@ -379,7 +380,7 @@ class _WritingViewState extends State<WritingView> {
                       controller: _priceFieldController,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
-                        labelText: '월세',
+                        hintText: '월세',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15.0),
                         ),
