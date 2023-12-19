@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
@@ -20,7 +21,8 @@ class _NicknameViewState extends State<NicknameView> {
 
   final List<String> departmentItems = [
     '소프트웨어융합학과',
-    '컴퓨터공학부'
+    '인공지능학과',
+    '컴퓨터공학과'
   ];
 
   String? selectedValue;
@@ -104,11 +106,7 @@ class _NicknameViewState extends State<NicknameView> {
                           ),
                           SizedBox(width: 20.0,),
                           ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                _nicknameController.text.isEmpty ?
-                                _nicknameValidate = false : _nicknameValidate = true;
-                              });
+                            onPressed: _nicknameController.text.isEmpty ? null : () {
                               if (_nicknameDuplication) {
                                 showPopup(context);
                               }
@@ -250,7 +248,8 @@ class _NicknameViewState extends State<NicknameView> {
                       alignment: Alignment.bottomCenter,
                       child: ElevatedButton(
                         onPressed:
-                          _isDisable? null : () => Navigator.pushNamed(context, '/app'),
+                          _nicknameController.text.isEmpty || selectedValue.isNull ? null
+                              : () => Navigator.pushNamed(context, '/app'),
                           child: Text('시작하기', style: TextStyle(fontSize: 20.0)),
                           style: ElevatedButton.styleFrom(
                             primary: Color.fromRGBO(157, 28, 32, 1),
@@ -277,7 +276,7 @@ void showPopup(context) {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
-              '이미 사용 중인 닉네임입니다',
+              '사용 가능한 닉네임입니다',
               style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
             ),
             const SizedBox(height: 15),

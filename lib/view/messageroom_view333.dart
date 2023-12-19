@@ -3,14 +3,16 @@ import 'package:kyunghee_market/view/message/article.dart';
 import 'package:kyunghee_market/view/message/message.dart';
 import 'package:kyunghee_market/view/message/new_message.dart';
 
-class MessageRoomView extends StatefulWidget {
-  const MessageRoomView({super.key});
+import 'message/message333.dart';
+
+class MessageRoomView333 extends StatefulWidget {
+  const MessageRoomView333({super.key});
 
   @override
-  State<MessageRoomView> createState() => _MessageRoomViewState();
+  State<MessageRoomView333> createState() => _MessageRoomView333State();
 }
 
-class _MessageRoomViewState extends State<MessageRoomView> {
+class _MessageRoomView333State extends State<MessageRoomView333> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +38,7 @@ class _MessageRoomViewState extends State<MessageRoomView> {
                 ),
               ),
               Text(
-                '알로하오예',
+                '컴공미남',
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 18,
@@ -78,7 +80,7 @@ class _MessageRoomViewState extends State<MessageRoomView> {
             Positioned(
               child: Column(
                 children: [
-                  Expanded(child: Messages()),
+                  Expanded(child: Messages333()),
                   NewMessage(),
                 ],
               ),

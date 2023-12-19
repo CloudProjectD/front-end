@@ -3,14 +3,17 @@ import 'package:kyunghee_market/view/message/article.dart';
 import 'package:kyunghee_market/view/message/message.dart';
 import 'package:kyunghee_market/view/message/new_message.dart';
 
-class MessageRoomView extends StatefulWidget {
-  const MessageRoomView({super.key});
+import 'message/article22.dart';
+import 'message/message22.dart';
+
+class MessageRoomView22 extends StatefulWidget {
+  const MessageRoomView22({super.key});
 
   @override
-  State<MessageRoomView> createState() => _MessageRoomViewState();
+  State<MessageRoomView22> createState() => _MessageRoomView22State();
 }
 
-class _MessageRoomViewState extends State<MessageRoomView> {
+class _MessageRoomView22State extends State<MessageRoomView22> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,12 +81,12 @@ class _MessageRoomViewState extends State<MessageRoomView> {
             Positioned(
               child: Column(
                 children: [
-                  Expanded(child: Messages()),
+                  Expanded(child: Messages22()),
                   NewMessage(),
                 ],
               ),
             ),
-            Positioned(child: Article()),
+            Positioned(child: Article22()),
           ]),
         ));
   }

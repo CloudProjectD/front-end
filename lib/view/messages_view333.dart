@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:kyunghee_market/view/messageroom_view333.dart';
 
 import 'messageroom_view22.dart';
 
-class MessagesView extends StatefulWidget {
-  const MessagesView({super.key});
+class MessagesView333 extends StatefulWidget {
+  const MessagesView333({super.key});
 
   @override
-  State<MessagesView> createState() => _MessagesViewState();
+  State<MessagesView333> createState() => _MessagesView333State();
 }
 
-class _MessagesViewState extends State<MessagesView> {
+class _MessagesView333State extends State<MessagesView333> {
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +54,11 @@ class _MessagesViewState extends State<MessagesView> {
                 // ),
                 child: ListTile(
                   onTap: (){
-                    Navigator.pushNamed(context, '/messageroom');
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const MessageRoomView333(),
+                      ),
+                    );
                   },
                   contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
                   title: Row(
@@ -67,14 +72,14 @@ class _MessagesViewState extends State<MessagesView> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            '알로하오예',
+                            '컴공미남',
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w700
                             ),
                           ),
                           Text(
-                            '스포츠의학과',
+                            '컴퓨터공학과',
                             style: TextStyle(
                                 fontSize: 14,
                             ),
@@ -143,14 +148,14 @@ class _MessagesViewState extends State<MessagesView> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '알로하오예',
+                              '컴공미남',
                               style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w700
                               ),
                             ),
                             Text(
-                              '스포츠의학과',
+                              '컴퓨터공학과',
                               style: TextStyle(
                                 fontSize: 14,
                               ),
@@ -161,7 +166,7 @@ class _MessagesViewState extends State<MessagesView> {
                     ), // 게시글 제목
                     subtitle: Padding(
                       padding: const EdgeInsets.only(top: 10.0),
-                      child: Text('관리자: \n경매가 마감되었습니다. 판매자와 연결됩니다.'),
+                      child: Text('관리자: \n경매가 마감되었습니다. 입찰자와 연결됩니다.'),
                     ),
                     trailing: Container(
                       height: 70.0,

@@ -32,8 +32,7 @@ class _MainViewState extends State<MainView> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           title: const Text(
             'KHU Market',
@@ -78,8 +77,7 @@ class _MainViewState extends State<MainView> {
             );
           },
         ),
-      ),
-    );
+      );
   }
 }
 
