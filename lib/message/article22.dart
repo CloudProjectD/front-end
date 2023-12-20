@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:kyunghee_market/model/post.dart';
 import 'package:kyunghee_market/view/detail_view.dart';
 
-class Article extends StatelessWidget {
+class Article22 extends StatelessWidget {
 
   Post post =
-  Post(title: '아이폰 15 pro 팝니다', content: "빨리 가져가세요", price: 5000, category: '거래', image: ["./iphone_detail.png"], creator: "알로하오예", id: 0, createdAt: '2023/12/19');
+  Post(title: '한정판 춘식이인형 빨리 가져가세요', content: "한정판입니다. 10000원부터 시작합니다", price: 10000, category: '경매', image: ["./assets/chunsik1.png"], creator: "알로하오예", id: 2, createdAt: '2023/12/19', deadline: DateTime(2023, 12, 21, 23, 59),);
 
 
   @override
@@ -41,7 +41,7 @@ class Article extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '아이폰 15 pro 팝니다',
+                    '한정판 춘식이인형 빨리 가져가세요',
                     maxLines: 1,
                     style:
                     TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
@@ -49,14 +49,14 @@ class Article extends StatelessWidget {
                   SizedBox(
                     height: 10.0,
                   ),
-                  Text('빨리 가져가세요', maxLines: 1,)
+                  Text('한정판입니다. 10000원부터 시작합니다', maxLines: 1,)
                 ],
               ),
             ),
             SizedBox(
               width: 70,
-              height: 70,
-              child: Image.asset('assets/iphone_detail.png'))
+                height: 70,
+                child: Image.asset('assets/chunsik1.png'))
           ],
         ),
       ),

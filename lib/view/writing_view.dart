@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -81,7 +80,7 @@ class _WritingViewState extends State<WritingView> {
                   },
                 ),
               ),
-              SizedBox(height: 5),
+              SizedBox(height: 20),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Container(
@@ -207,31 +206,47 @@ class _WritingViewState extends State<WritingView> {
                   ),
                 ),
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 20),
               Text('제목'),
+              SizedBox(height: 10),
               TextField(
                 controller: _titleFieldController,
+                cursorColor: Colors.black87,
                 decoration: InputDecoration(
                   // labelText: '제목',
                   hintText: '제목을 입력해주세요',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 1.8,
+                          color: Color.fromRGBO(157, 28, 32, 1),
+                        ),
+                        borderRadius: BorderRadius.circular(15))
                 ),
                 onChanged: (text) {
                   setState(() {});
                 },
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 20),
               Text('설명'),
+              SizedBox(height: 10),
               TextField(
                 controller: _contentFieldController,
                 maxLines: 5,
+                cursorColor: Colors.black87,
                 decoration: InputDecoration(
                   hintText: '거래하고 싶은 물품에 대한 설명을 작성해 주세요',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 1.8,
+                          color: Color.fromRGBO(157, 28, 32, 1),
+                        ),
+                        borderRadius: BorderRadius.circular(15))
                 ),
                 onChanged: (text) {
                   setState(() {});
@@ -309,25 +324,40 @@ class _WritingViewState extends State<WritingView> {
               ),
               SizedBox(height: 16),
               if (transactionType == '거래')
-                TextField(
-                  controller: _priceFieldController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    hintText: '거래 가격',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15.0),
+                Column(
+                  children: [
+                    TextField(
+                      controller: _priceFieldController,
+                      keyboardType: TextInputType.number,
+                      cursorColor: Colors.black87,
+                      decoration: InputDecoration(
+                        hintText: '거래 가격',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                width: 1.8,
+                                color: Color.fromRGBO(157, 28, 32, 1),
+                              ),
+                              borderRadius: BorderRadius.circular(15))
+                      ),
+                      onChanged: (text) {
+                        setState(() {});
+                      },
                     ),
-                  ),
-                  onChanged: (text) {
-                    setState(() {});
-                  },
+                    SizedBox(height: 139,)
+                  ],
                 )
+              else if (transactionType == '나눔')
+                SizedBox(height: 198,)
               else if (transactionType == '경매')
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: 16),
                     Text('경매 마감일'),
+                    SizedBox(height: 10),
                     Row(children: [
                       ElevatedButton(
                         onPressed: () => _selectDate(context),
@@ -349,19 +379,28 @@ class _WritingViewState extends State<WritingView> {
                     ]),
                     SizedBox(height: 16),
                     Text('경매 시작가'),
+                    SizedBox(height: 10),
                     TextField(
                       controller: _priceFieldController,
                       keyboardType: TextInputType.number,
+                      cursorColor: Colors.black87,
                       decoration: InputDecoration(
                         hintText: '원하는 시작가격을 입력해주세요',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                width: 1.8,
+                                color: Color.fromRGBO(157, 28, 32, 1),
+                              ),
+                              borderRadius: BorderRadius.circular(15))
                       ),
                       onChanged: (text) {
                         setState(() {});
                       },
                     ),
+                    SizedBox(height: 7,)
                   ],
                 )
               else if (transactionType == '원룸')
@@ -371,25 +410,41 @@ class _WritingViewState extends State<WritingView> {
                   children: [
                     SizedBox(height: 16),
                     Text('보증금'),
+                    SizedBox(height: 10),
                     TextField(
                       keyboardType: TextInputType.number,
+                      cursorColor: Colors.black87,
                       decoration: InputDecoration(
                         hintText: '보증금',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                width: 1.8,
+                                color: Color.fromRGBO(157, 28, 32, 1),
+                              ),
+                              borderRadius: BorderRadius.circular(15))
                       ),
                     ),
                     SizedBox(height: 16),
                     Text('월세'),
+                    SizedBox(height: 10),
                     TextField(
                       controller: _priceFieldController,
                       keyboardType: TextInputType.number,
+                      cursorColor: Colors.black87,
                       decoration: InputDecoration(
                         hintText: '월세',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                width: 1.8,
+                                color: Color.fromRGBO(157, 28, 32, 1),
+                              ),
+                              borderRadius: BorderRadius.circular(15))
                       ),
                       onChanged: (text) {
                         setState(() {});
@@ -398,18 +453,21 @@ class _WritingViewState extends State<WritingView> {
                   ],
                 ),
               SizedBox(height: 50),
-              ElevatedButton(
-                  onPressed: isButtonEnabled() ? () => _onSubmit() : null,
-                  child: Text(
-                    '완료',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromRGBO(157, 28, 32, 1),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
+              SizedBox(
+                height: 50,
+                child: ElevatedButton(
+                    onPressed: isButtonEnabled() ? () => _onSubmit() : null,
+                    child: Text(
+                      '완료',
+                      style: TextStyle(color: Colors.white),
                     ),
-                  )),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromRGBO(157, 28, 32, 1),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                    )),
+              ),
             ],
           ),
         ),

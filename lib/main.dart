@@ -8,6 +8,7 @@ import 'package:kyunghee_market/view/authentication_view.dart';
 import 'package:kyunghee_market/view/main_view.dart';
 import 'package:kyunghee_market/view/messageroom_view.dart';
 import 'package:kyunghee_market/view/messages_view.dart';
+import 'package:kyunghee_market/view/messages_view333.dart';
 import 'package:kyunghee_market/view/nickname_view.dart';
 import 'package:kyunghee_market/view/profile_view.dart';
 import 'package:kyunghee_market/view/report_view.dart';
@@ -32,16 +33,17 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'KHU Market',
-      // initialRoute: '/',
-      home: HomePage(),
+      initialRoute: '/',
+      // home: HomePage(),
       routes: {
-        // '/': (context) => LoginView(),
+        '/': (context) => LoginView(),
         // '/authentication': (context) => AuthenticationView(),
-        // '/nickname': (context) => NicknameView(),
+        '/nickname': (context) => NicknameView(),
         '/profile': (context) => ProfileView(),
         '/app': (context) => HomePage(),
         '/main': (context) => MainView(),
         '/messages': (context) => MessagesView(),
+        '/messages333': (context) => MessagesView333(),
         '/messageroom': (context) => MessageRoomView(),
         '/report': (context) => ReportView(),
         '/writing': (context) => WritingView(),

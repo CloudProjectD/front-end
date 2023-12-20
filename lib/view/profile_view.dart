@@ -28,13 +28,16 @@ class _ProfileViewState extends State<ProfileView> {
             Card(
               child: Row(
                 children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.black12,
-                    radius: 30.0,
-                    child: Image.asset(
-                      'assets/user.png',
-                      width: 35,
-                      height: 35,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CircleAvatar(
+                      backgroundColor: Color(0xFFCC6157),
+                      radius: 25.0,
+                      child: Image.asset(
+                          'assets/user.png',
+                        width: 30,
+                        height: 30,
+                      ),
                     ),
                   ),
                   Container(
@@ -45,10 +48,11 @@ class _ProfileViewState extends State<ProfileView> {
                             Text(
                               '컴공미남',
                               style: TextStyle(
-                                  fontSize: 22,
+                                  fontSize: 20,
                                   fontWeight: FontWeight.w600,
                                   color: Colors.black),
                             ),
+                            SizedBox(height: 7),
                             Text(
                               '컴퓨터공학과',
                               style: TextStyle(
@@ -85,7 +89,7 @@ class _ProfileViewState extends State<ProfileView> {
                     Text(
                       '내 게시글',
                       style: TextStyle(
-                        fontSize: 15.0,
+                        fontSize: 16.0,
                       ),
                     )
                   ],
@@ -165,7 +169,8 @@ class _ProfileViewState extends State<ProfileView> {
                     Text(
                       '좋아요',
                       style: TextStyle(
-                        fontSize: 15.0,
+                        fontSize: 16.0,
+
                       ),
                     )
                   ],

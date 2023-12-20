@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import '../message/article.dart';
-import '../message/message.dart';
+import '../message/message333.dart';
 import '../message/new_message.dart';
 
-class MessageRoomView extends StatefulWidget {
-  const MessageRoomView({super.key});
+class MessageRoomView333 extends StatefulWidget {
+  const MessageRoomView333({super.key});
 
   @override
-  State<MessageRoomView> createState() => _MessageRoomViewState();
+  State<MessageRoomView333> createState() => _MessageRoomView333State();
 }
 
-class _MessageRoomViewState extends State<MessageRoomView> {
+class _MessageRoomView333State extends State<MessageRoomView333> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +36,7 @@ class _MessageRoomViewState extends State<MessageRoomView> {
                 ),
               ),
               Text(
-                '알로하오예',
+                '컴공미남',
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 18,
@@ -78,7 +78,7 @@ class _MessageRoomViewState extends State<MessageRoomView> {
             Positioned(
               child: Column(
                 children: [
-                  Expanded(child: Messages()),
+                  Expanded(child: Messages333()),
                   NewMessage(),
                 ],
               ),

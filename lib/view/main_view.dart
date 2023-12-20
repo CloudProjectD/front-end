@@ -28,11 +28,13 @@ class _MainViewState extends State<MainView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text(
           'KHU Market',
           style: TextStyle(
             color: Colors.black,
+
           ),
         ),
         actions: [
@@ -87,10 +89,16 @@ class _MainViewState extends State<MainView> {
                             fit: BoxFit.cover,
                           ),
                   ),
-                  title: Text(
-                    postController
+                  title: Padding(
+                    padding: const EdgeInsets.only(bottom: 15),
+                    child: Text(
+                      postController
                         .posts[index].title,
-                    style: TextStyle(fontSize: 18),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600
+                      ),
+                    ),
                   ),
                   // 게시글 제목
                   subtitle: buildPrice(postController
@@ -110,8 +118,7 @@ class _MainViewState extends State<MainView> {
             );
           },
         ),
-      ),
-    );
+      ));
   }
 
   Widget buildPrice(Post post) {
