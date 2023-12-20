@@ -93,7 +93,7 @@ class _MainViewState extends State<MainView> {
                     padding: const EdgeInsets.only(bottom: 15),
                     child: Text(
                       postController
-                          .posts[index].title,
+                        .posts[index].title,
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600
