@@ -19,7 +19,7 @@ class MainView extends StatefulWidget {
 }
 
 class _MainViewState extends State<MainView> {
-  final PostController postController = Get.put(PostController());
+  final PostController postController = Get.find<PostController>();
 
   bool isAssetImage(String imagePath) {
     return imagePath.startsWith('./assets');
@@ -69,19 +69,19 @@ class _MainViewState extends State<MainView> {
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     child: isAssetImage(postController
-                            .posts[postController.posts.length - 1 - index]
+                            .posts[index]
                             .image
                             .first)
                         ? Image.asset(
                             postController
-                                .posts[postController.posts.length - 1 - index]
+                                .posts[index]
                                 .image
                                 .first,
                             fit: BoxFit.cover,
                           )
                         : Image.file(
                             File(postController
-                                .posts[postController.posts.length - 1 - index]
+                                .posts[index]
                                 .image
                                 .first),
                             fit: BoxFit.cover,
@@ -89,20 +89,19 @@ class _MainViewState extends State<MainView> {
                   ),
                   title: Text(
                     postController
-                        .posts[postController.posts.length - 1 - index].title,
+                        .posts[index].title,
                     style: TextStyle(fontSize: 18),
                   ),
                   // 게시글 제목
                   subtitle: buildPrice(postController
-                      .posts[postController.posts.length - 1 - index]),
+                      .posts[index]),
                   // 가격
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => DetailView(
-                            post: postController.posts[
-                                postController.posts.length - 1 - index]),
+                            post: postController.posts[index]),
                       ),
                     );
                   },

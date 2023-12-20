@@ -101,10 +101,10 @@ class _ProfileViewState extends State<ProfileView> {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10.0),
                   child: Image.asset(
-                    'assets/iphone.png',
+                    'assets/goguma.png',
                     height: 70.0,
                     width: 70.0,
-                    color: Colors.black12,
+                    //color: Colors.black12,
                   ),
                 ),
                 ClipRRect(

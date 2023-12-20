@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:get/get.dart';
 
 class Post{
+  final int id;
   final String title;
   final String content;
   final String category;
@@ -15,6 +16,7 @@ class Post{
   final String createdAt;
 
   const Post({
+    required this.id,
     required this.title,
     required this.content,
     required this.category,

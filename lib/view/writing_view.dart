@@ -436,6 +436,7 @@ class _WritingViewState extends State<WritingView> {
 
     if (transactionType == '거래') {
       newPost = Post(
+        id: 8,
         title: _titleFieldController.text,
         content: _contentFieldController.text,
         category: transactionType,
@@ -448,6 +449,7 @@ class _WritingViewState extends State<WritingView> {
       );
     }else{
       newPost = Post(
+        id: 9,
         title: _titleFieldController.text,
         content: _contentFieldController.text,
         category: transactionType,
@@ -462,7 +464,7 @@ class _WritingViewState extends State<WritingView> {
     }
 
     PostController postController = Get.find<PostController>();
-    postController.addPost(newPost);
+    postController.insertPost(newPost);
 
     Navigator.pushNamed(context, '/app');
   }
