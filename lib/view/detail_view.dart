@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:kyunghee_market/controller/post_controller.dart';
 import 'package:kyunghee_market/view/messageroom_view.dart';
 import 'package:kyunghee_market/view/writing_view.dart';
@@ -52,7 +54,7 @@ class _DetailViewState extends State<DetailView> {
                     itemBuilder: (context, index) {
                       return isAssetImage(widget.post.image.first) ?
                       Image.asset(widget.post.image[index], fit: BoxFit.cover,)
-                          : Image.file(File(widget.post.image[index]));
+                          : Image.file(File(widget.post.image[index]), fit: BoxFit.cover);
                     },
                   ),
                 ),
@@ -161,7 +163,12 @@ class _DetailViewState extends State<DetailView> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 3),
+                  Text(widget.post.createdAt, style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey
+                  ),),
+                  SizedBox(height: 3),
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0, bottom: 16.0),
                     child: Text(
@@ -434,6 +441,7 @@ class _DetailViewState extends State<DetailView> {
   }
 
   Widget _buildPriceInfo(Post post) {
+    print(post.deadline);
     if (post.category == '원룸') {
       return Text('보증금 ${post.deposit}/${post.price}',
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600));
@@ -441,8 +449,14 @@ class _DetailViewState extends State<DetailView> {
       return Text('무료',
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600));
     } else if (post.category == '경매') {
-      return Text('${post.price}원부터',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600));
+      return Column(
+        children: [
+          SizedBox(height: 5),
+          Text('${post.price}원부터',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          Text('${DateFormat('yyyy/MM/dd').format(post.deadline ?? DateTime.now())} 23:59까지', style: TextStyle(fontSize: 10, color: Colors.black45))
+        ],
+      );
     } else {
       return Text('${post.price}원',
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600));
@@ -454,8 +468,10 @@ class _DetailViewState extends State<DetailView> {
       return SizedBox(width: 0.0);
     } else if (widget.post.category == '원룸') {
       return SizedBox(width: 5.0);
-    } else {
+    } else if(widget.post.category == '거래'){
       return SizedBox(width: 45.0);
+    } else{
+      return SizedBox(width: 100);
     }
   }
 
@@ -561,43 +577,38 @@ class _DetailViewState extends State<DetailView> {
                 ],
               ),
             ),
-            actions: [
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text(
-                    '취소',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                      primary: Color.fromRGBO(157, 28, 32, 1),
-                      onPrimary: Colors.white)),
-              ElevatedButton(
-                  onPressed: () {
-                    // TODO: 입찰 처리 로직 추가
-                    // String bidPrice = bidPriceController.text;
-                    // print('입찰가: $bidPrice');
-                    Navigator.pop(context);
-                    Fluttertoast.showToast(
-                      msg: '입찰이 완료되었습니다.',
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity.BOTTOM,
-                      backgroundColor: Colors.black,
-                      textColor: Colors.white,
-                    );
-                  },
-                  child: Text(
-                    '입찰하기',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                      primary: Color.fromRGBO(157, 28, 32, 1),
-                      onPrimary: Colors.white)),
-            ],
-          ),
-        );
-      },
+
+          actions: [
+            IconButton(
+              icon: Icon(Icons.close), // 취소 표시 아이콘
+              onPressed: () {
+                Navigator.of(context).pop(); // 다이얼로그 닫기
+              },
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  // TODO: 입찰 처리 로직 추가
+                  // String bidPrice = bidPriceController.text;
+                  // print('입찰가: $bidPrice');
+                  Navigator.pop(context);
+                  Fluttertoast.showToast(
+                    msg: '입찰이 완료되었습니다.',
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    backgroundColor: Colors.black,
+                    textColor: Colors.white,
+                  );
+                },
+                child: Text(
+                  '입찰하기',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                style: ElevatedButton.styleFrom(
+                    primary: Color.fromRGBO(157, 28, 32, 1),
+                    onPrimary: Colors.white)),
+          ],
+        )
+        );}
     );
   }
 }

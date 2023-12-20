@@ -22,6 +22,8 @@ class _EditViewState extends State<EditView> {
   List<XFile?> _pickedImgs = []; //갤러리에서 갸져올 이미지 리스트 변수
   List<XFile?> showImgs = [];
   DateTime? _selectedDate;
+  PostController postController = Get.find<PostController>();
+  Post? existingPost;
 
   //이미지 선택함수
   Future<void> _pickImg() async {
@@ -61,6 +63,11 @@ class _EditViewState extends State<EditView> {
     _priceFieldController.text = widget.post.price.toString();
     showImgs = widget.post.image.map((path) => XFile(path)).toList();
     print("Initialized _pickedImgs: $_pickedImgs");
+    existingPost= postController.posts.firstWhere(
+          (post) => post.id == widget.post.id,
+      orElse: () => widget.post,
+    );
+    print(existingPost);
   }
 
   bool isButtonEnabled() {
@@ -377,75 +384,25 @@ class _EditViewState extends State<EditView> {
     );
   }
 
-  /*
-  Future<void> _getImage(int index) async {
-    final picker = ImagePicker();
-    final pickedImage = await picker.pickImage(source: ImageSource.gallery);
-
-    if (pickedImage != null) {
-      setState(() {
-        _images[index] = XFile(pickedImage.path); // XFile을 File로 변환
-      });
-    }
-
-  }
-   */
-
-  // Widget _buildImageWidget(XFile img) {
-  //   return Container(
-  //     width: 80,
-  //     height: 80,
-  //     child: Stack(
-  //       children: [
-  //         // 기존 이미지 표시
-  //         Container(
-  //           decoration: BoxDecoration(
-  //             color: Colors.black,
-  //             borderRadius: BorderRadius.circular(5),
-  //             image: DecorationImage(
-  //               fit: BoxFit.cover,
-  //               image:  FileImage(File(img!.path)),
-  //             )
-  //           ),
-  //           child: IconButton(
-  //             padding: EdgeInsets.zero,
-  //             constraints: BoxConstraints(),
-  //             icon: Icon(Icons.close, color: Colors.white, size: 15),
-  //             onPressed: () {
-  //               setState(() {
-  //                 _pickedImgs.remove(img);
-  //               });
-  //             },
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
-
   void _onSubmit() {
-    PostController postController = Get.find<PostController>();
-    //기존 게시물 찾기
-    Post existingPost = postController.posts.firstWhere(
-          (post) => post.title == widget.post.title,
-      orElse: () => widget.post,
-    );
 
     Post modifiedPost = Post(
+      id: existingPost!.id,
       title: _titleFieldController.text,
       content: _contentFieldController.text,
       category: transactionType,
       price: transactionType == '거래' ? int.parse(_priceFieldController.text) : null,
       creator: '컴공미남',
+      createdAt: '2023/12/20',
       image: [],
     );
 
-    List<String> updateImages= _pickedImgs.map((img) => img?.path ?? '').toList();
+    List<String> updateImages= showImgs.map((img) => img?.path ?? '').toList();
     modifiedPost.image.addAll(updateImages);
-
-    postController.deletePost(existingPost);
-    postController.addPost(modifiedPost);
-    // Navigator.push(
+    postController.modifyPost(modifiedPost);
+    // postController.deletePost(existingPost);
+    // postController.addPost(modifiedPost);
+    // Navigator.pushReplacement(
     //   context,
     //   MaterialPageRoute(
     //     builder: (context) => DetailView(post: modifiedPost),

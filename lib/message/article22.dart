@@ -5,7 +5,7 @@ import 'package:kyunghee_market/view/detail_view.dart';
 class Article22 extends StatelessWidget {
 
   Post post =
-  Post(title: '한정판 춘식이인형 빨리 가져가세요', content: "한정판입니다. 10000원부터 시작합니다", price: 10000, category: '경매', image: ["./assets/chunsik1.png"], creator: "알로하오예");
+  Post(title: '한정판 춘식이인형 빨리 가져가세요', content: "한정판입니다. 10000원부터 시작합니다", price: 10000, category: '경매', image: ["./assets/chunsik1.png"], creator: "알로하오예", id: 2, createdAt: '2023/12/19', deadline: DateTime(2023, 12, 21, 23, 59),);
 
 
   @override

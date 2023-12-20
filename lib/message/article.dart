@@ -5,7 +5,7 @@ import 'package:kyunghee_market/view/detail_view.dart';
 class Article extends StatelessWidget {
 
   Post post =
-  Post(title: '스타벅스 기프티콘', content: "스타벅스 기프티콘 팔아여", price: 5000, category: '거래', image: ["./assets/product1.png"], creator: "알로하오예");
+  Post(title: '아이폰 15 pro 팝니다', content: "빨리 가져가세요", price: 5000, category: '거래', image: ["./iphone_detail.png"], creator: "알로하오예", id: 0, createdAt: '2023/12/19');
 
 
   @override

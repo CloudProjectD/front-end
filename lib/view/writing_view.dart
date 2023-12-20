@@ -51,9 +51,14 @@ class _WritingViewState extends State<WritingView> {
   TextEditingController _priceFieldController = TextEditingController();
 
   bool isButtonEnabled() {
-    return _titleFieldController.text.isNotEmpty &&
-        _contentFieldController.text.isNotEmpty &&
-        _priceFieldController.text.isNotEmpty;
+    if (transactionType == '나눔') {
+      return _titleFieldController.text.isNotEmpty &&
+          _contentFieldController.text.isNotEmpty;
+    } else {
+      return _titleFieldController.text.isNotEmpty &&
+          _contentFieldController.text.isNotEmpty &&
+          _priceFieldController.text.isNotEmpty;
+    }
   }
 
   @override
@@ -136,7 +141,8 @@ class _WritingViewState extends State<WritingView> {
                                 child: IconButton(
                                   padding: EdgeInsets.zero,
                                   constraints: BoxConstraints(),
-                                  icon: Icon(Icons.close, color: Colors.white, size: 15),
+                                  icon: Icon(Icons.close,
+                                      color: Colors.white, size: 15),
                                   onPressed: () {
                                     setState(() {
                                       showImgs.remove(img);
@@ -484,21 +490,39 @@ class _WritingViewState extends State<WritingView> {
    */
 
   void _onSubmit() {
-    Post newPost = Post(
-      title: _titleFieldController.text,
-      content: _contentFieldController.text,
-      category: transactionType,
-      price: transactionType == '거래' ? int.parse(_priceFieldController.text) : null,
-      creator: '컴공미남',
-      image: [],
-    );
+    Post newPost;
 
+    if (transactionType == '거래') {
+      newPost = Post(
+        id: 8,
+        title: _titleFieldController.text,
+        content: _contentFieldController.text,
+        category: transactionType,
+        price: transactionType == '거래'
+            ? int.parse(_priceFieldController.text)
+            : null,
+        creator: '컴공미남',
+        createdAt: '2023/12/20',
+        image: [],
+      );
+    }else{
+      newPost = Post(
+        id: 9,
+        title: _titleFieldController.text,
+        content: _contentFieldController.text,
+        category: transactionType,
+        price: null,
+        creator: '컴공미남',
+        createdAt: '2023/12/20',
+        image: [],
+      );
+    }
     for (XFile? img in showImgs) {
       newPost.image.add(img?.path ?? '');
     }
 
     PostController postController = Get.find<PostController>();
-    postController.addPost(newPost);
+    postController.insertPost(newPost);
 
     Navigator.pushNamed(context, '/app');
   }
