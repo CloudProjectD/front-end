@@ -28,13 +28,14 @@ class _DetailViewState extends State<DetailView> {
   //   "./assets/iphone.png",
   //   "./assets/iphone_detail.png",
   // ];
-  bool isAssetImage(String imagePath){
+  bool isAssetImage(String imagePath) {
     return imagePath.startsWith('./assets');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -49,7 +50,7 @@ class _DetailViewState extends State<DetailView> {
                   child: PageView.builder(
                     itemCount: widget.post.image.length,
                     itemBuilder: (context, index) {
-                      return isAssetImage(widget.post.image.first)?
+                      return isAssetImage(widget.post.image.first) ?
                       Image.asset(widget.post.image[index], fit: BoxFit.cover,)
                           : Image.file(File(widget.post.image[index]));
                     },
@@ -68,7 +69,7 @@ class _DetailViewState extends State<DetailView> {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.fromLTRB(15, 15, 25, 15),
               child: Row(
                 children: [
                   CircleAvatar(
@@ -83,7 +84,8 @@ class _DetailViewState extends State<DetailView> {
                       Text(
                         widget.post.creator,
                         style: TextStyle(
-                          fontSize: 17,
+                            fontSize: 17,
+                            fontWeight: FontWeight.w700
                         ),
                       ),
                     ],
@@ -111,7 +113,7 @@ class _DetailViewState extends State<DetailView> {
               color: Colors.grey,
             ),
             Padding(
-              padding: const EdgeInsets.all(14.0),
+              padding: const EdgeInsets.fromLTRB(20, 14, 14, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -121,7 +123,7 @@ class _DetailViewState extends State<DetailView> {
                         widget.post.title,
                         style: TextStyle(
                           fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
                       Spacer(),
@@ -131,7 +133,8 @@ class _DetailViewState extends State<DetailView> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => EditView(post : widget.post),
+                                builder: (context) =>
+                                    EditView(post: widget.post),
                               ),
                             );
                           } else if (value == 'delete') {
@@ -139,7 +142,7 @@ class _DetailViewState extends State<DetailView> {
                           }
                         },
                         itemBuilder: (BuildContext context) =>
-                            <PopupMenuEntry<String>>[
+                        <PopupMenuEntry<String>>[
                           const PopupMenuItem<String>(
                             value: 'modify',
                             child: ListTile(
@@ -158,7 +161,7 @@ class _DetailViewState extends State<DetailView> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 8),
+                  SizedBox(height: 20),
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0, bottom: 16.0),
                     child: Text(
@@ -177,16 +180,19 @@ class _DetailViewState extends State<DetailView> {
         child: Row(
           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            IconButton(
-                onPressed: () {
-                  setState(() {
-                    isLiked = !isLiked;
-                  });
-                },
-                icon: Icon(
-                  isLiked ? Icons.favorite : Icons.favorite_border,
-                  color: isLiked ? Colors.red : Colors.black,
-                )),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      isLiked = !isLiked;
+                    });
+                  },
+                  icon: Icon(
+                    isLiked ? Icons.favorite : Icons.favorite_border,
+                    color: isLiked ? Colors.red : Colors.black,
+                  )),
+            ),
             VerticalDivider(
               thickness: 0.2,
               width: 0.05,
@@ -194,61 +200,138 @@ class _DetailViewState extends State<DetailView> {
               indent: 5,
               endIndent: 5,
             ),
-            SizedBox(width: 3),
-            _buildPriceInfo(widget.post),
-            _getWidgetForCategory(widget.post),
-            Container(
-              width: 110,
-              height: 40,
+            // SizedBox(width: 3),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: _buildPriceInfo(widget.post),
+            ),
+            Expanded(
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: _getWidget(widget.post),
+                )
+            )
+            // _getWidgetForCategory(widget.post),
+            // Container(
+            //   width: 110,
+            //   height: 40,
+            //   child: Row(
+            //     children: [
+            //       _buildSizedBox(widget.post),
+            //       if (widget.post.category == '경매')
+            //         ElevatedButton(
+            //           onPressed: () {
+            //             _showAuctionDialog(context);
+            //           },
+            //           child: Row(
+            //             children: [
+            //               Image.asset('./assets/auction.png',
+            //                   color: Colors.white),
+            //               SizedBox(width: 3),
+            //               Text('입찰'),
+            //             ],
+            //           ),
+            //           style: ElevatedButton.styleFrom(
+            //               primary: Color.fromRGBO(157, 28, 32, 1),
+            //               onPrimary: Colors.white,
+            //               textStyle: TextStyle(fontSize: 15),
+            //               shape: RoundedRectangleBorder(
+            //                 borderRadius: BorderRadius.circular(16),
+            //               )),
+            //         ),
+            //     ],
+            //   ),
+            // ),
+            //SizedBox(width: 5),
+            // Container(
+            //   width: 100,
+            //   height: 40,
+            //   decoration: BoxDecoration(
+            //     color: Color.fromRGBO(157, 28, 32, 1),
+            //     borderRadius: BorderRadius.circular(16),
+            //   ),
+            //   child: Row(
+            //     children: [
+            //       IconButton(
+            //         icon: Icon(
+            //           Icons.send,
+            //           color: Colors.white,
+            //         ),
+            //         onPressed: () {
+            //           Navigator.push(
+            //               context,
+            //               MaterialPageRoute(
+            //                   builder: (context) => MessageRoomView()));
+            //         },
+            //       ),
+            //       SizedBox(width: 3),
+            //       Text(
+            //         '쪽지',
+            //         style: TextStyle(fontSize: 15, color: Colors.white),
+            //       )
+            //     ],
+            //   ),
+            // ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _getWidget(Post post) {
+    if (widget.post.category == '경매') {
+      return Row(
+        children: [
+          Container(
+            width: 80,
+            height: 40,
+            child: ElevatedButton(
+              onPressed: () {
+                _showAuctionDialog(context);
+              },
               child: Row(
                 children: [
-                  _buildSizedBox(widget.post),
-                  if (widget.post.category == '경매')
-                    ElevatedButton(
-                      onPressed: () {
-                        _showAuctionDialog(context);
-                      },
-                      child: Row(
-                        children: [
-                          Image.asset('./assets/auction.png',
-                              color: Colors.white),
-                          SizedBox(width: 3),
-                          Text('입찰'),
-                        ],
-                      ),
-                      style: ElevatedButton.styleFrom(
-                          primary: Color.fromRGBO(157, 28, 32, 1),
-                          onPrimary: Colors.white,
-                          textStyle: TextStyle(fontSize: 15),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          )),
-                    ),
+                  Image.asset('./assets/auction.png',
+                      color: Colors.white,
+                    width: 18,
+                  ),
+                  SizedBox(width: 3),
+                  Text('입찰'),
                 ],
               ),
+              style: ElevatedButton.styleFrom(
+                  primary: Color.fromRGBO(157, 28, 32, 1),
+                  onPrimary: Colors.white,
+                  textStyle: TextStyle(fontSize: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  )),
             ),
-            //SizedBox(width: 5),
-            Container(
-              width: 100,
+          ),
+          SizedBox(width: 7),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => MessageRoomView()));
+            },
+            child: Container(
+              margin: EdgeInsets.only(right: 10),
+              width: 80,
               height: 40,
               decoration: BoxDecoration(
                 color: Color.fromRGBO(157, 28, 32, 1),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  IconButton(
-                    icon: Icon(
-                      Icons.send,
+                  Icon(Icons.send,
                       color: Colors.white,
+                    size: 14,
                     ),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => MessageRoomView()));
-                    },
-                  ),
+
                   SizedBox(width: 3),
                   Text(
                     '쪽지',
@@ -257,10 +340,41 @@ class _DetailViewState extends State<DetailView> {
                 ],
               ),
             ),
+          ),
+        ],
+      );
+    } else {
+      return Container(
+        margin: EdgeInsets.only(right: 10),
+        width: 100,
+        height: 40,
+        decoration: BoxDecoration(
+          color: Color.fromRGBO(157, 28, 32, 1),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Row(
+          children: [
+            IconButton(
+              icon: Icon(
+                Icons.send,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MessageRoomView()));
+              },
+            ),
+            SizedBox(width: 3),
+            Text(
+              '쪽지',
+              style: TextStyle(fontSize: 15, color: Colors.white),
+            ),
           ],
         ),
-      ),
-    );
+      );
+    }
   }
 
   ImageProvider getProfileImageByNickname(Post post) {
@@ -322,22 +436,22 @@ class _DetailViewState extends State<DetailView> {
   Widget _buildPriceInfo(Post post) {
     if (post.category == '원룸') {
       return Text('보증금 ${post.deposit}/${post.price}',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold));
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600));
     } else if (post.category == '나눔') {
       return Text('무료',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold));
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600));
     } else if (post.category == '경매') {
       return Text('${post.price}원부터',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold));
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600));
     } else {
       return Text('${post.price}원',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold));
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600));
     }
   }
 
   Widget _getWidgetForCategory(Post post) {
     if (widget.post.category == '경매') {
-      return SizedBox(width: 10.0);
+      return SizedBox(width: 0.0);
     } else if (widget.post.category == '원룸') {
       return SizedBox(width: 5.0);
     } else {
@@ -360,121 +474,128 @@ class _DetailViewState extends State<DetailView> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Column(
-            children: [
-              Image.asset('./assets/auction.png'),
-              SizedBox(height: 7),
-              Text(
-                '원하는 가격에 get it!',
-                style: TextStyle(color: Colors.grey, fontSize: 18),
-              ),
-            ],
-          ),
-          content: Container(
-            height: 300,
-            width: 300,
-            child: Column(
+        return SingleChildScrollView(
+          child: AlertDialog(
+            title: Column(
               children: [
-                // 경매 시작가격 표시
-                Text('경매 시작가격'),
-                SizedBox(height: 10),
-                Container(
-                  padding: EdgeInsets.all(8),
-                  height: 40,
-                  width: 200,
-                  decoration: BoxDecoration(
-                    border: null,
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Center(
-                    child: Text(
-                      '${widget.post.price}원',
-                      style: TextStyle(
-                          fontSize: 16,
-                      ),
-                    ),
-                  ),
+                Image.asset('./assets/auction.png'),
+                SizedBox(height: 7),
+                Text(
+                  '원하는 가격에 get it!',
+                  style: TextStyle(color: Colors.black87, fontSize: 18),
                 ),
-                SizedBox(height: 16),
-                Text('현재 입찰가'),
-                SizedBox(height: 10),
-                Container(
-                  padding: EdgeInsets.all(8),
-                  height: 40,
-                  width: 200,
-                  decoration: BoxDecoration(
-                    border: null,
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Center(
-                    child: Text(
-                      '2000000원',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 16),
-                Text('구매희망가'),
-                SizedBox(height: 10),
-                Container(
-                  padding: EdgeInsets.all(8),
-                  height: 40,
-                  width: 200,
-                  decoration: BoxDecoration(
-                    border: null,
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Center(
-                    child: TextField(
-                      // controller: bidPriceController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        labelText: '구매 희망가를 입력하세요',
-                      ),
-                    ),
-                  ),
-                ),
+                SizedBox(height: 50,)
               ],
             ),
+            content: Container(
+              height: 300,
+              width: 300,
+              child: Column(
+                children: [
+                  // 경매 시작가격 표시
+                  Text('경매 시작가격'),
+                  SizedBox(height: 10),
+                  Container(
+                    padding: EdgeInsets.all(8),
+                    height: 40,
+                    width: 200,
+                    decoration: BoxDecoration(
+                      border: null,
+                      color: Colors.black12,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Center(
+                      child: Text(
+                        '${widget.post.price}원',
+                        style: TextStyle(
+                            fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  Text('현재 입찰가'),
+                  SizedBox(height: 10),
+                  Container(
+                    padding: EdgeInsets.all(8),
+                    height: 40,
+                    width: 200,
+                    decoration: BoxDecoration(
+                      border: null,
+                      color: Colors.black12,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Center(
+                      child: Text(
+                        '2000000원',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  Text('구매희망가'),
+                  SizedBox(height: 10),
+                  Container(
+                    padding: EdgeInsets.all(8),
+                    height: 40,
+                    width: 200,
+                    decoration: BoxDecoration(
+                      border: null,
+                      color: Colors.black12,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Center(
+                      child: TextField(
+                        // controller: bidPriceController,
+                        keyboardType: TextInputType.number,
+                        textAlign: TextAlign.center,
+                        cursorColor: Colors.black87,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(vertical: 8.0),
+                          border: InputBorder.none,
+                          hintText: '구매 희망가를 입력하세요',
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            actions: [
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    '취소',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                      primary: Color.fromRGBO(157, 28, 32, 1),
+                      onPrimary: Colors.white)),
+              ElevatedButton(
+                  onPressed: () {
+                    // TODO: 입찰 처리 로직 추가
+                    // String bidPrice = bidPriceController.text;
+                    // print('입찰가: $bidPrice');
+                    Navigator.pop(context);
+                    Fluttertoast.showToast(
+                      msg: '입찰이 완료되었습니다.',
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.BOTTOM,
+                      backgroundColor: Colors.black,
+                      textColor: Colors.white,
+                    );
+                  },
+                  child: Text(
+                    '입찰하기',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                      primary: Color.fromRGBO(157, 28, 32, 1),
+                      onPrimary: Colors.white)),
+            ],
           ),
-          actions: [
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text(
-                  '취소',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                style: ElevatedButton.styleFrom(
-                    primary: Color.fromRGBO(157, 28, 32, 1),
-                    onPrimary: Colors.white)),
-            ElevatedButton(
-                onPressed: () {
-                  // TODO: 입찰 처리 로직 추가
-                  // String bidPrice = bidPriceController.text;
-                  // print('입찰가: $bidPrice');
-                  Navigator.pop(context);
-                  Fluttertoast.showToast(
-                    msg: '입찰이 완료되었습니다.',
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.BOTTOM,
-                    backgroundColor: Colors.black,
-                    textColor: Colors.white,
-                  );
-                },
-                child: Text(
-                  '입찰하기',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                style: ElevatedButton.styleFrom(
-                    primary: Color.fromRGBO(157, 28, 32, 1),
-                    onPrimary: Colors.white)),
-          ],
         );
       },
     );
