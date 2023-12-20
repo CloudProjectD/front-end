@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:kyunghee_market/controller/post_controller.dart';
 import 'package:kyunghee_market/view/messageroom_view.dart';
 import 'package:kyunghee_market/view/writing_view.dart';
@@ -51,7 +53,7 @@ class _DetailViewState extends State<DetailView> {
                     itemBuilder: (context, index) {
                       return isAssetImage(widget.post.image.first)?
                       Image.asset(widget.post.image[index], fit: BoxFit.cover,)
-                          : Image.file(File(widget.post.image[index]));
+                          : Image.file(File(widget.post.image[index]), fit: BoxFit.cover);
                     },
                   ),
                 ),
@@ -158,7 +160,12 @@ class _DetailViewState extends State<DetailView> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 8),
+                  SizedBox(height: 3),
+                  Text(widget.post.createdAt, style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey
+                  ),),
+                  SizedBox(height: 3),
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0, bottom: 16.0),
                     child: Text(
@@ -194,7 +201,7 @@ class _DetailViewState extends State<DetailView> {
               indent: 5,
               endIndent: 5,
             ),
-            SizedBox(width: 3),
+            SizedBox(width: 7),
             _buildPriceInfo(widget.post),
             _getWidgetForCategory(widget.post),
             Container(
@@ -320,6 +327,7 @@ class _DetailViewState extends State<DetailView> {
   }
 
   Widget _buildPriceInfo(Post post) {
+    print(post.deadline);
     if (post.category == '원룸') {
       return Text('보증금 ${post.deposit}/${post.price}',
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold));
@@ -327,8 +335,14 @@ class _DetailViewState extends State<DetailView> {
       return Text('무료',
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold));
     } else if (post.category == '경매') {
-      return Text('${post.price}원부터',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold));
+      return Column(
+        children: [
+          SizedBox(height: 5),
+          Text('${post.price}원부터',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          Text('${DateFormat('yyyy/MM/dd').format(post.deadline ?? DateTime.now())} 23:59까지', style: TextStyle(fontSize: 10, color: Colors.black45))
+        ],
+      );
     } else {
       return Text('${post.price}원',
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold));
@@ -340,8 +354,10 @@ class _DetailViewState extends State<DetailView> {
       return SizedBox(width: 10.0);
     } else if (widget.post.category == '원룸') {
       return SizedBox(width: 5.0);
-    } else {
+    } else if(widget.post.category == '거래'){
       return SizedBox(width: 45.0);
+    } else{
+      return SizedBox(width: 100);
     }
   }
 
@@ -362,15 +378,16 @@ class _DetailViewState extends State<DetailView> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Column(
-            children: [
-              Image.asset('./assets/auction.png'),
-              SizedBox(height: 7),
-              Text(
-                '원하는 가격에 get it!',
-                style: TextStyle(color: Colors.grey, fontSize: 18),
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset('./assets/auction.png'),
+                  SizedBox(height: 7),
+                  Text(
+                    '원하는 가격에 get it!',
+                    style: TextStyle(color: Colors.grey, fontSize: 18),
+                  ),
+                ],
               ),
-            ],
-          ),
           content: Container(
             height: 300,
             width: 300,
@@ -385,7 +402,7 @@ class _DetailViewState extends State<DetailView> {
                   width: 200,
                   decoration: BoxDecoration(
                     border: null,
-                    color: Colors.grey,
+                    color: Colors.black12,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Center(
@@ -406,7 +423,7 @@ class _DetailViewState extends State<DetailView> {
                   width: 200,
                   decoration: BoxDecoration(
                     border: null,
-                    color: Colors.grey,
+                    color: Colors.black12,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Center(
@@ -425,7 +442,7 @@ class _DetailViewState extends State<DetailView> {
                   width: 200,
                   decoration: BoxDecoration(
                     border: null,
-                    color: Colors.grey,
+                    color: Colors.black12,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Center(
@@ -442,17 +459,12 @@ class _DetailViewState extends State<DetailView> {
             ),
           ),
           actions: [
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text(
-                  '취소',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                style: ElevatedButton.styleFrom(
-                    primary: Color.fromRGBO(157, 28, 32, 1),
-                    onPrimary: Colors.white)),
+            IconButton(
+              icon: Icon(Icons.close), // 취소 표시 아이콘
+              onPressed: () {
+                Navigator.of(context).pop(); // 다이얼로그 닫기
+              },
+            ),
             ElevatedButton(
                 onPressed: () {
                   // TODO: 입찰 처리 로직 추가

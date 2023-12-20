@@ -438,6 +438,7 @@ class _EditViewState extends State<EditView> {
       category: transactionType,
       price: transactionType == '거래' ? int.parse(_priceFieldController.text) : null,
       creator: '컴공미남',
+      createdAt: '2023/12/20',
       image: [],
     );
 

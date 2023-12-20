@@ -13,9 +13,10 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
-  bool isAssetImage(String imagePath){
+  bool isAssetImage(String imagePath) {
     return imagePath.startsWith('./assets');
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,13 +26,16 @@ class _ProfileViewState extends State<ProfileView> {
         child: Column(
           children: [
             Card(
-              child : Row(
+              child: Row(
                 children: [
                   CircleAvatar(
-                    backgroundColor: Colors.grey,
+                    backgroundColor: Colors.black12,
                     radius: 30.0,
-                    backgroundImage: AssetImage(
-                        'assets/user.png'),
+                    child: Image.asset(
+                      'assets/user.png',
+                      width: 35,
+                      height: 35,
+                    ),
                   ),
                   Container(
                       margin: EdgeInsets.only(left: 20),
@@ -60,10 +64,10 @@ class _ProfileViewState extends State<ProfileView> {
               height: 50.0,
             ),
             GestureDetector(
-              onTap: (){
+              onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context)=>MyPostView()),
+                  MaterialPageRoute(builder: (context) => MyPostView()),
                 );
               },
               child: Padding(
@@ -71,7 +75,8 @@ class _ProfileViewState extends State<ProfileView> {
                 child: Row(
                   children: [
                     Icon(
-                      Icons.bookmark_border,
+                      Icons.bookmark,
+                      color: Color.fromRGBO(157, 28, 32, 1),
                       size: 20.0,
                     ),
                     SizedBox(
@@ -110,7 +115,8 @@ class _ProfileViewState extends State<ProfileView> {
                     width: 70.0,
                     color: Colors.black12,
                   ),
-                ),ClipRRect(
+                ),
+                ClipRRect(
                   borderRadius: BorderRadius.circular(10.0),
                   child: Image.asset(
                     'assets/iphone.png',
@@ -125,9 +131,11 @@ class _ProfileViewState extends State<ProfileView> {
                       color: Colors.black12,
                       height: 70.0,
                       width: 70.0,
-                      child: IconButton(onPressed:(){
-                        Navigator.pushNamed(context, '/writing');
-                      } , icon: Icon(Icons.add_sharp))),
+                      child: IconButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/writing');
+                          },
+                          icon: Icon(Icons.add_sharp))),
                 )
               ],
             ),
@@ -136,32 +144,33 @@ class _ProfileViewState extends State<ProfileView> {
               color: Colors.black26,
             ),
             GestureDetector(
-              onTap: (){
+              onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context)=>LikeListView()),
+                  MaterialPageRoute(builder: (context) => LikeListView()),
                 );
               },
-              child : Padding(
-                  padding: const EdgeInsets.only(top: 10.0),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.favorite_border,
-                        size: 20.0,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.favorite,
+                      color: Color.fromRGBO(157, 28, 32, 1),
+                      size: 20.0,
+                    ),
+                    SizedBox(
+                      width: 15.0,
+                    ),
+                    Text(
+                      '좋아요',
+                      style: TextStyle(
+                        fontSize: 15.0,
                       ),
-                      SizedBox(
-                        width: 15.0,
-                      ),
-                      Text(
-                        '좋아요',
-                        style: TextStyle(
-                          fontSize: 15.0,
-                        ),
-                      )
-                    ],
-                  ),
+                    )
+                  ],
                 ),
+              ),
             ),
             SizedBox(
               height: 15.0,
@@ -172,36 +181,44 @@ class _ProfileViewState extends State<ProfileView> {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10.0),
                   child: Image.asset(
-                    'assets/iphone.png',
+                    "assets/iphone_detail.png",
                     height: 70.0,
                     width: 70.0,
-                    color: Colors.black12,
-                  ),
-                ),ClipRRect(
-                  borderRadius: BorderRadius.circular(10.0),
-                  child: Image.asset(
-                    'assets/iphone.png',
-                    height: 70.0,
-                    width: 70.0,
-                    color: Colors.black12,
-                  ),
-                ),ClipRRect(
-                  borderRadius: BorderRadius.circular(10.0),
-                  child: Image.asset(
-                    'assets/iphone.png',
-                    height: 70.0,
-                    width: 70.0,
-                    color: Colors.black12,
+                    // color: Colors.black12,
                   ),
                 ),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10.0),
-                  child: Container(
+                  child: Image.asset(
+                    'assets/oneroom1.png',
+                    height: 70.0,
+                    width: 70.0,
+                    // color: Colors.black12,
+                  ),
+                ),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10.0),
+                  child: Image.asset(
+                    'assets/mac.png',
+                    height: 70.0,
+                    width: 70.0,
+                    // color: Colors.black12,
+                  ),
+                ),
+                ClipRRect(
+                    borderRadius: BorderRadius.circular(10.0),
+                    child: Container(
                       color: Colors.black12,
                       height: 70.0,
                       width: 70.0,
-                      child: Icon(Icons.add_sharp)),
-                )
+                      child: IconButton(
+                          icon: Icon(Icons.add_sharp),
+                          onPressed: () {
+                            Navigator.push(context,  MaterialPageRoute(
+                              builder: (context) => LikeListView(),
+                            ),);
+                      }),
+                    )),
               ],
             ),
             Divider(
