@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:kyunghee_market/home.dart';
 import 'package:kyunghee_market/view/detail_view.dart';
 import 'package:kyunghee_market/view/edit_view.dart';
@@ -12,6 +13,8 @@ import 'package:kyunghee_market/view/profile_view.dart';
 import 'package:kyunghee_market/view/report_view.dart';
 import 'package:kyunghee_market/view/writing_view.dart';
 
+import 'controller/post_controller.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -22,6 +25,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final PostController postController = Get.put(PostController());
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {

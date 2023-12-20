@@ -157,25 +157,25 @@ class _TradeListState extends State<TradeList> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.0),
                 ),
-                child: isAssetImage(widget.posts[widget.posts.length - 1 - index].image.first)
+                child: isAssetImage(widget.posts[index].image.first)
                     ? Image.asset(
-                  widget.posts[widget.posts.length - 1 - index].image.first,
+                  widget.posts[index].image.first,
                   fit: BoxFit.cover,
                 )
                     : Image.file(
-                  File(widget.posts[widget.posts.length - 1 - index].image.first),
+                  File(widget.posts[index].image.first),
                   fit: BoxFit.cover,
                 ),
               ),
-              title: Text(widget.posts[widget.posts.length - 1 - index].title, style: TextStyle(
+              title: Text(widget.posts[index].title, style: TextStyle(
                   fontSize: 18
               ),), // 게시글 제목
-              subtitle: Text('${widget.posts[widget.posts.length - 1 - index].price}원'), // 가격
+              subtitle: Text('${widget.posts[index].price}원'), // 가격
               onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => DetailView(post: widget.posts[widget.posts.length - 1 - index]),
+                    builder: (context) => DetailView(post: widget.posts[index]),
                   ),
                 );
               },
@@ -216,25 +216,25 @@ class _AuctionListState extends State<AuctionList> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.0),
                 ),
-                child: isAssetImage(widget.posts[widget.posts.length - 1 - index].image.first)
+                child: isAssetImage(widget.posts[index].image.first)
                     ? Image.asset(
-                  widget.posts[widget.posts.length - 1 - index].image.first,
+                  widget.posts[index].image.first,
                   fit: BoxFit.cover,
                 )
                     : Image.file(
-                  File(widget.posts[widget.posts.length - 1 - index].image.first),
+                  File(widget.posts[index].image.first),
                   fit: BoxFit.cover,
                 ),
               ),
-              title: Text(widget.posts[widget.posts.length - 1 - index].title, style: TextStyle(
+              title: Text(widget.posts[index].title, style: TextStyle(
                   fontSize: 18
               ),), // 게시글 제목
-              subtitle: Text('${widget.posts[widget.posts.length - 1 - index].price}원부터~'), // 가격
+              subtitle: Text('${widget.posts[index].price}원부터~'), // 가격
               onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => DetailView(post: widget.posts[widget.posts.length - 1 - index]),
+                    builder: (context) => DetailView(post: widget.posts[index]),
                   ),
                 );
               },
@@ -275,17 +275,17 @@ class _ShareListState extends State<ShareList> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.0),
                 ),
-                child: isAssetImage(widget.posts[widget.posts.length - 1 - index].image.first)
+                child: isAssetImage(widget.posts[index].image.first)
                     ? Image.asset(
-                  widget.posts[widget.posts.length - 1 - index].image.first,
+                  widget.posts[index].image.first,
                   fit: BoxFit.cover,
                 )
                     : Image.file(
-                  File(widget.posts[widget.posts.length - 1 - index].image.first),
+                  File(widget.posts[index].image.first),
                   fit: BoxFit.cover,
                 ),
               ),
-              title: Text(widget.posts[widget.posts.length - 1 - index].title, style: TextStyle(
+              title: Text(widget.posts[index].title, style: TextStyle(
                   fontSize: 18
               ),), // 게시글 제목
               subtitle: Text('무료'), // 가격
@@ -293,7 +293,7 @@ class _ShareListState extends State<ShareList> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => DetailView(post: widget.posts[widget.posts.length - 1 - index]),
+                    builder: (context) => DetailView(post: widget.posts[index]),
                   ),
                 );
               },
@@ -334,26 +334,26 @@ class _OneRoomListState extends State<OneRoomList> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.0),
                 ),
-                child: isAssetImage(widget.posts[widget.posts.length - 1 - index].image.first)
+                child: isAssetImage(widget.posts[index].image.first)
                     ? Image.asset(
-                  widget.posts[widget.posts.length - 1 - index].image.first,
+                  widget.posts[index].image.first,
                   fit: BoxFit.cover,
                 )
                     : Image.file(
-                  File(widget.posts[widget.posts.length - 1 - index].image.first),
+                  File(widget.posts[index].image.first),
                   fit: BoxFit.cover,
                 ),
               ),
-              title: Text(widget.posts[widget.posts.length - 1 - index].title, style: TextStyle(
+              title: Text(widget.posts[index].title, style: TextStyle(
                   fontSize: 18
               ),), // 게시글 제목
               subtitle: Text(
-                  '${widget.posts[widget.posts.length - 1 - index].price}/${widget.posts[widget.posts.length - 1 - index].deposit}'), // 가격
+                  '보증금 ${widget.posts[index].deposit} / ${widget.posts[index].price}'), // 가격
               onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => DetailView(post: widget.posts[widget.posts.length - 1 - index]),
+                    builder: (context) => DetailView(post: widget.posts[index]),
                   ),
                 );
               },
