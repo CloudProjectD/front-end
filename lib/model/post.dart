@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:get/get.dart';
+
 class Post{
   final String title;
   final String content;
@@ -10,6 +12,7 @@ class Post{
   final int? deposit;
   final bool? auction;
   final DateTime? deadline;
+  final String createdAt;
 
   const Post({
     required this.title,
@@ -21,9 +24,7 @@ class Post{
     this.deposit,
     this.auction,
     this.deadline,
+    required this.createdAt
 });
 
-  /*
-    추후 json 형태로 바꾸는 것 추가
-   */
 }
