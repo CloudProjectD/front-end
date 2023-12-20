@@ -170,6 +170,7 @@ class _ProfileViewState extends State<ProfileView> {
                       '좋아요',
                       style: TextStyle(
                         fontSize: 16.0,
+
                       ),
                     )
                   ],

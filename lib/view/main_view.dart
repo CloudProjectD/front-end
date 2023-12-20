@@ -89,15 +89,13 @@ class _MainViewState extends State<MainView> {
                             fit: BoxFit.cover,
                           ),
                   ),
-                  title: Padding(
-                    padding: const EdgeInsets.only(bottom: 15),
-                    child: Text(
-                      postController
-                          .posts[postController.posts.length - 1 - index].title,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600
-                      ),
+
+                  title: Text(
+                    postController
+                        .posts[index].title,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600
                     ),
                   ),
                   // 게시글 제목
